@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QL_XeVui</title>
+
+    <link rel="stylesheet" href="/FrontEnd/css/style_login.css">
+    <link rel="stylesheet" href="/FrontEnd/css/style.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">
+</head>
+
+<body>
+    <div class="box">
+        <header>
+            <h2 class="logo">
+                <img src="/FrontEnd/HinhAnh/logo.png" alt="Logo">
+            </h2>
+            <nav class="navigation">
+                <a href="#" onclick="closeDatVe()">Trang chủ</a>
+                <a href="#" onclick="showDatVe()">Đặt vé</a>
+                <a href="#" onclick="showChuyenXe()">Chuyến xe</a>
+                <a href="#" onclick="showTuyenDuong()">Tuyến đường</a>
+                <a href="#" onclick="showBenXe()">Bến xe</a>
+                <button class="btn_Login" onclick="showLogin()">Đăng nhập</button>
+            </nav>
+        </header>
+    </div>
+
+    <div class="login" id="loginForm">
+        <form id="loginFormElement" class="form_login" action="/api/auth/login" method="POST">
+            <h1 class="form_hedding">Đăng nhập</h1>
+            <div class="form_group">
+                <i class="fa fa-user"></i>
+                <input type="text" name="username" class="form_input" placeholder="Tên đăng nhập">
+            </div>
+            <div class="form_group">
+                <i class="fa fa-key"></i>
+                <input type="password" name="password" id="password" class="form_input" placeholder="Mật khẩu">
+                <div id="eye" onclick="hienMatKhau()">
+                    <i class="fa fa-eye"></i>
+                </div>
+            </div>
+            <div class="forgot__register_link">
+                <a href="#">Quên mật khẩu?</a>
+                <a href="#" onclick="showRegister()">Đăng ký</a>
+            </div>
+
+            <input type="submit" value="Đăng nhập" class="form_submit">
+            <button type="button" class="btn_close" onclick="hideLogin()">Đóng</button>
+        </form>
+    </div>
+
+    <div class="register" id="registerForm">
+        <form id="registerFormElement" class="form_register" action="/api/auth/register" method="POST">
+            <h1 class="form_hedding">Đăng ký</h1>
+
+            <div class="form_group">
+                <i class="fa fa-user"></i>
+                <input type="text" name="username" class="form_input" placeholder="Tên đăng nhập">
+                <div class="error-message" id="registerUsernameError"></div>
+            </div>
+
+            <div class="form_group">
+                <i class="fa fa-key"></i>
+                <input type="password" name="password" id="register_password" class="form_input" placeholder="Mật khẩu">
+                <div class="error-message" id="registerPasswordError"></div>
+            </div>
+
+            <div class="form_group">
+                <i class="fa fa-envelope"></i>
+                <input type="email" name="email" class="form_input" placeholder="Email">
+                <div class="error-message" id="registerEmailError"></div>
+            </div>
+
+            <input type="submit" value="Đăng ký" class="form_submit">
+            <button type="button" class="btn_close" onclick="hideRegister()">Đóng</button>
+        </form>
+    </div>
+
+    <div id="overlay" class="hidden"></div>
+
+    <script>
+        // Chỉ đóng form khi nhấn vào overlay
+        document.getElementById('overlay').addEventListener('click', function () {
+            hideLogin();
+            hideRegister();
+        });
+
+        function showLogin() {
+            document.getElementById('loginForm').style.display = 'block';
+            document.getElementById('overlay').style.display = 'block';
+        }
+        function hideLogin() {
+            document.getElementById('loginForm').style.display = 'none';
+            document.getElementById('overlay').style.display = 'none';
+        }
+
+        function showRegister() {
+            document.getElementById('registerForm').style.display = 'block';
+            document.getElementById('loginForm').style.display = 'none';
+            document.getElementById('overlay').style.display = 'block';
+        }
+        function hideRegister() {
+            document.getElementById('registerForm').style.display = 'none';
+            document.getElementById('overlay').style.display = 'none';
+        }
+
+    </script>
+    <script src="/FrontEnd/js/scriptDangKy.js"></script>
+    <script src="/FrontEnd/js/scripHienMK.js"></script>
+</body>
+
+</html>
