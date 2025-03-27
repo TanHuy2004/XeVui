@@ -7,44 +7,42 @@
     <title>QL_XeVui</title>
     <link rel="stylesheet" href="/FrontEnd/css/style_login.css">
     <link rel="stylesheet" href="/FrontEnd/css/style.css">
+    <link rel="stylesheet" href="/FrontEnd/css/style_NhanVien.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">
 </head>
 
-<body>
-    <div class="box" id="trangchuForm">
-        <header>
-            <div class="ham-menu" id="hammenu">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-            <h2 class="logo">
-                <img src="/FrontEnd/HinhAnh/logo.png" alt="Logo">
-            </h2>
-            <ul class="menu-list">
-                <li><a href="#">Khách hàng</a></li>
-                <li><a href="#">Chuyến xe</a></li>
-                <li><a href="#">Tuyến đường</a></li>
-                <li><a href="#" onclick="showNhanVienForm()">Nhân viên</a></li>
-                <li><a href="#">Nhà xe</a></li>
-            </ul>
-
-            <nav class="navigation">
-                <a href="#" onclick="showTrangChu()">Trang chủ</a>
-                <a href="#" onclick="showDatVe()">Đặt vé</a>
-                <a href="#" onclick="showDatVe()">Tin tức</a>
-                <button class="btn_Login" onclick="showLogin()">Đăng nhập</button>
-                <button class="btn_Login" onclick="showRegister()">Đăng ký</button>
-                <div class="user-info" id="userinfo">
-                    <button class="btn_Logout" onclick="logoutUser()">Đăng xuất</button>
-                    <i class="fas fa-user-circle"></i> <span id="usernameDisplay"></span>
-                </div>
-
-            </nav>
-        </header>
+<header>
+    <div class="ham-menu" id="hammenu">
+        <span></span>
+        <span></span>
+        <span></span>
     </div>
+    <h2 class="logo">
+        <img src="/FrontEnd/HinhAnh/logo.png" alt="Logo">
+    </h2>
+    <ul class="menu-list">
+        <li><a href="#">Khách hàng</a></li>
+        <li><a href="#">Chuyến xe</a></li>
+        <li><a href="#">Tuyến đường</a></li>
+        <li><a href="#" onclick="showNhanVienForm()">Nhân viên</a></li>
+        <li><a href="#">Nhà xe</a></li>
+    </ul>
 
-    <div id="header-placeholder"></div>
+    <nav class="navigation">
+        <a href="#" onclick="showTrangChu()">Trang chủ</a>
+        <a href="#" onclick="showDatVe()">Đặt vé</a>
+        <a href="#" onclick="showDatVe()">Tin tức</a>
+        <button class="btn_Login" onclick="showLogin()">Đăng nhập</button>
+        <button class="btn_Login" onclick="showRegister()">Đăng ký</button>
+        <div class="user-info" id="userinfo">
+            <button class="btn_Logout" onclick="logoutUser()">Đăng xuất</button>
+            <i class="fas fa-user-circle"></i> <span id="usernameDisplay"></span>
+        </div>
+
+    </nav>
+</header>
+
+<body>
     <div class="container">
         <h1>Quản lý nhân viên</h1>
         <form id="employeeForm">
@@ -145,8 +143,6 @@
         function showNhanVienForm() {
             window.location.href = '/FrontEnd/html/NhanVienForm.html';
         }
-
-
     </script>
     <script src="/FrontEnd/js/scriptLogin.js"></script>
     <script src="/FrontEnd/js/scriptHienMK.js"></script>
