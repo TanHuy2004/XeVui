@@ -44,81 +44,34 @@
         </header>
     </div>
 
-    <div class="login" id="loginForm">
-        <form id="loginFormElement" class="form_login" action="/api/auth/login" method="POST">
-            <h1 class="form_hedding">Đăng nhập</h1>
-
+    <div id="header-placeholder"></div>
+    <div class="container">
+        <h1>Quản lý nhân viên</h1>
+        <form id="employeeForm">
             <div class="form_group">
-                <i class="fa fa-user"></i>
-                <input type="text" name="username" id="loginUsername" class="form_input" placeholder="Tên đăng nhập">
-                <div class="error-message" id="loginUsernameError"></div>
+                <label for="employeeID">Mã nhân viên</label>
+                <input type="text" id="employeeID" name="employeeID" required>
             </div>
             <div class="form_group">
-                <i class="fa fa-key"></i>
-                <input type="password" name="password" id="loginPassword" class="form_input" placeholder="Mật khẩu">
-                <div class="eye" id="eyeIcon" onclick="togglePassword()">
-                    <i class="fa fa-eye"></i>
-                </div>
-
-                <div class="error-message" id="loginPasswordError"></div>
+                <label for="name">Tên</label>
+                <input type="text" id="name" name="name" required>
             </div>
-            <div class="forgot__register_link">
-                <a href="#" onclick="showForgotPassword()">Quên mật khẩu?</a>
-                <a href="#" onclick="showRegister()">Đăng ký</a>
+            <div class="form_group">
+                <label for="role">Vai trò</label>
+                <input type="text" id="role" name="role" required>
             </div>
-
-            <input type="submit" value="Đăng nhập" class="form_submit">
-            <button type="button" class="btn_close" onclick="hideLogin()">Đóng</button>
-            <div class="success-message" id="loginSuccessMessage"></div>
-            <div class="error-message" id="loginErrorMessage"></div>
+            <div class="form_group">
+                <label for="phone">Số điện thoại</label>
+                <input type="text" id="phone" name="phone" required>
+            </div>
+            <div class="form_actions">
+                <button type="button" onclick="addEmployee()">Thêm</button>
+                <button type="button" onclick="updateEmployee()">Sửa</button>
+                <button type="button" onclick="deleteEmployee()">Xóa</button>
+            </div>
         </form>
+        <div class="message" id="message"></div>
     </div>
-
-    <div class="register" id="registerForm">
-        <form id="registerFormElement" class="form_register" action="/api/auth/register" method="POST">
-            <h1 class="form_hedding">Đăng ký</h1>
-
-            <div class="form_group">
-                <i class="fa fa-user"></i>
-                <input type="text" name="username" id="registerUsername" class="form_input" placeholder="Tên đăng nhập">
-                <div class="error-message" id="registerUsernameError"></div>
-            </div>
-
-            <div class="form_group">
-                <i class="fa fa-key"></i>
-                <input type="password" name="password" id="registerPassword" class="form_input" placeholder="Mật khẩu">
-                <div class="error-message" id="registerPasswordError"></div>
-            </div>
-
-            <div class="form_group">
-                <i class="fa fa-envelope"></i>
-                <input type="email" name="email" id="registerEmail" class="form_input" placeholder="Email">
-                <div class="error-message" id="registerEmailError"></div>
-            </div>
-
-            <input type="submit" value="Đăng ký" class="form_submit">
-            <button type="button" class="btn_close" onclick="hideRegister()">Đóng</button>
-            <div class="error-message" id="registerErrorMessage"></div>
-            <div class="success-message" id="registerSuccessMessage"></div>
-        </form>
-    </div>
-
-    <div class="forgot-password" id="forgotPasswordForm">
-        <form id="forgotPasswordFormElement" class="form_forgot">
-            <h1 class="form_hedding">Quên mật khẩu</h1>
-
-            <div class="form_group">
-                <i class="fa fa-envelope"></i>
-                <input type="email" name="email" id="forgotPasswordEmail" class="form_input"
-                    placeholder="Nhập email của bạn" required>
-                <div class="error-message" id="forgotPasswordEmailError"></div>
-            </div>
-            <div class="password-display" id="passwordDisplay"></div>
-            <input type="submit" value="Gửi yêu cầu" class="form_submit">
-            <button type="button" class="btn_close" onclick="hideForgotPassword()">Đóng</button>
-        </form>
-    </div>
-
 
     <div id="overlay" class="hidden"></div>
 
@@ -192,7 +145,6 @@
         function showNhanVienForm() {
             window.location.href = '/FrontEnd/html/NhanVienForm.html';
         }
-
 
 
     </script>

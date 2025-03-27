@@ -13,7 +13,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // Import routes
 const authRoutes = require("./BackEnd/Controller/LoginController");
+const quenMKRoutes = require("./BackEnd/Controller/QuenMKController"); // Rename to avoid conflict
 app.use("/api/auth", authRoutes);
+app.use("/api/auth", quenMKRoutes); // Ensure the prefix matches the frontend call
 
 // Cấu hình phục vụ file tĩnh
 app.use('/FrontEnd', express.static(path.join(__dirname, 'FrontEnd')));

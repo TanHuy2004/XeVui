@@ -1,6 +1,6 @@
-function hienMatKhau() {
-    var passwordInput = document.getElementById("password");
-    var eyeIcon = document.getElementById("eye").querySelector("i");
+function togglePassword() {
+    var passwordInput = document.getElementById("loginPassword");
+    var eyeIcon = document.getElementById("eyeIcon").querySelector("i");
     
     if (passwordInput.type === "password") {
         passwordInput.type = "text";

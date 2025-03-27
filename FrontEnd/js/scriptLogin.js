@@ -1,15 +1,15 @@
 document.getElementById("loginFormElement").addEventListener("submit", async function (event) {
-    event.preventDefault(); // Ngăn form gửi đi nếu có lỗi
+    event.preventDefault();
 
     let username = document.getElementById("loginUsername").value.trim();
     let password = document.getElementById("loginPassword").value.trim();
     let hasError = false;
 
-    // Xóa thông báo lỗi cũ
     document.getElementById("loginUsernameError").textContent = "";
     document.getElementById("loginPasswordError").textContent = "";
+    document.getElementById("loginSuccessMessage").textContent = "";
+    document.getElementById("loginErrorMessage").textContent = "";
 
-    // Kiểm tra lỗi
     if (username === "") {
         document.getElementById("loginUsernameError").textContent = "Vui lòng nhập tên đăng nhập!";
         hasError = true;
@@ -19,7 +19,6 @@ document.getElementById("loginFormElement").addEventListener("submit", async fun
         hasError = true;
     }
 
-    // Nếu không có lỗi, gửi form
     if (!hasError) {
         try {
             const response = await fetch("http://localhost:9999/api/auth/login", {
@@ -28,18 +27,28 @@ document.getElementById("loginFormElement").addEventListener("submit", async fun
                 body: JSON.stringify({ username, password }),
             });
 
+            const result = await response.json();
+
             if (response.ok) {
-                const result = await response.json();
                 document.getElementById("loginSuccessMessage").textContent = result.message;
+            
+                // Ẩn form đăng nhập & hiển thị trang chủ
+                hideLogin();
+                
+                // Gọi hàm hiển thị trang chủ
+                showUser(username);
+            
+                // Hiển thị user và ẩn đăng nhập/đăng ký
+                loginUser(username);   
             } else {
-                const errorResult = await response.json();
-                document.getElementById("loginErrorMessage").textContent = errorResult.message || "Vui lòng thử lại.";
+                document.getElementById("loginErrorMessage").textContent = result.message || "Vui lòng thử lại.";
             }
         } catch (error) {
             document.getElementById("loginErrorMessage").textContent = "Có lỗi xảy ra trong quá trình đăng nhập. Vui lòng thử lại sau.";
         }
     }
 });
+
 
 document.getElementById("registerFormElement").addEventListener("submit", async function (event) {
     event.preventDefault(); // Ngăn form gửi đi nếu có lỗi
@@ -53,6 +62,8 @@ document.getElementById("registerFormElement").addEventListener("submit", async 
     document.getElementById("registerUsernameError").textContent = "";
     document.getElementById("registerPasswordError").textContent = "";
     document.getElementById("registerEmailError").textContent = "";
+    document.getElementById("registerSuccessMessage").textContent = "";
+    document.getElementById("registerErrorMessage").textContent = "";
 
     // Kiểm tra lỗi
     if (username === "") {
@@ -64,7 +75,7 @@ document.getElementById("registerFormElement").addEventListener("submit", async 
         hasError = true;
     }
     if (!email.includes("@")) {
-        document.getElementById("registerEmailError").textContent = "Email không hợp lệ!";
+        document.getElementById("registerEmailError").textContent = "Vui lòng nhập Email hợp lệ!";
         hasError = true;
     }
 
@@ -80,6 +91,8 @@ document.getElementById("registerFormElement").addEventListener("submit", async 
             if (response.ok) {
                 const result = await response.json();
                 document.getElementById("registerSuccessMessage").textContent = result.message;
+                showLogin();
+                hideRegister();
             } else {
                 const errorResult = await response.json();
                 document.getElementById("registerErrorMessage").textContent = errorResult.message || "Vui lòng thử lại.";

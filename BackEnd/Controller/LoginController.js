@@ -1,22 +1,15 @@
 const express = require('express');
-const bcrypt = require('bcrypt');
 const { sql, poolPromise } = require('../config/db');
 
 const router = express.Router();
 
-// API để đăng ký người dùng
+// API Đăng ký người dùng
 router.post('/register', async (req, res) => {
     try {
         const { username, password, email } = req.body;
         
-        if (!username) {
-            return res.status(400).json({ message: '' });
-        }
-        if (!password) {
-            return res.status(400).json({ message: '' });
-        }
-        if (!email) {
-            return res.status(400).json({ message: '' });
+        if (!username || !password || !email) {
+            return res.status(400).json({ message: 'Thông tin không đầy đủ' });
         }
 
         // Kết nối đến database
@@ -33,17 +26,14 @@ router.post('/register', async (req, res) => {
             return res.status(400).json({ message: 'Tên tài khoản hoặc email đã tồn tại' });
         }
 
-        // Mã hóa mật khẩu
-        const hashedPassword = await bcrypt.hash(password, 10);
-
-        // Thêm người dùng mới vào database
+        // **Lưu mật khẩu thô vào database**
         await pool.request()
             .input('username', sql.NVarChar, username)
-            .input('password', sql.NVarChar, hashedPassword)
+            .input('password', sql.NVarChar, password)  // Không mã hóa mật khẩu
             .input('email', sql.NVarChar, email)
             .query('INSERT INTO Login (TaiKhoan, MatKhau, Email) VALUES (@username, @password, @email)');
 
-        res.status(201).json({ message: 'Đăng ký thành công!' });
+        res.status(201).json({ message: 'Đăng ký thành công! Vui lòng đăng nhập.' });
 
     } catch (err) {
         console.error("❌ Lỗi server:", err);
@@ -56,11 +46,8 @@ router.post('/login', async (req, res) => {
     try {
         const { username, password } = req.body;
 
-        if (!username) {
-            return res.status(400).json({ message: '' });
-        }
-        if (!password) {
-            return res.status(400).json({ message: '' });
+        if (!username || !password) {
+            return res.status(400).json({ message: 'Thông tin không đầy đủ' });
         }
 
         const pool = await poolPromise;
@@ -77,9 +64,8 @@ router.post('/login', async (req, res) => {
 
         const user = userCheckResult.recordset[0];
 
-        // Kiểm tra mật khẩu
-        const isPasswordValid = await bcrypt.compare(password, user.MatKhau);
-        if (!isPasswordValid) {
+        // **So sánh mật khẩu thô trực tiếp**
+        if (password !== user.MatKhau) {
             return res.status(400).json({ message: 'Tên đăng nhập hoặc mật khẩu không đúng' });
         }
 
