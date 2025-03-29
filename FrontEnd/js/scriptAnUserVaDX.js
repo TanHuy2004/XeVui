@@ -41,4 +41,5 @@ function logoutUser() {
     document.querySelector(".navigation a:nth-child(1)").style.display = "none";
     document.querySelector(".navigation a:nth-child(2)").style.display = "none";
     document.querySelector(".navigation a:nth-child(3)").style.display = "none";
+    window.location.href = "/DUAN_XEVUI/index.html"; 
 }

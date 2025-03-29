@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
@@ -29,7 +29,7 @@
     </ul>
 
     <nav class="navigation">
-        <a href="#" onclick="showTrangChu()">Trang chủ</a>
+        <a href="http://localhost:9999/DUAN_XEVUI/index.html">Trang chủ</a>
         <a href="#" onclick="showDatVe()">Đặt vé</a>
         <a href="#" onclick="showDatVe()">Tin tức</a>
         <button class="btn_Login" onclick="showLogin()">Đăng nhập</button>
@@ -43,34 +43,59 @@
 </header>
 
 <body>
-    <div class="container">
-        <h1>Quản lý nhân viên</h1>
-        <form id="employeeForm">
-            <div class="form_group">
-                <label for="employeeID">Mã nhân viên</label>
-                <input type="text" id="employeeID" name="employeeID" required>
-            </div>
-            <div class="form_group">
-                <label for="name">Tên</label>
-                <input type="text" id="name" name="name" required>
-            </div>
-            <div class="form_group">
-                <label for="role">Vai trò</label>
-                <input type="text" id="role" name="role" required>
-            </div>
-            <div class="form_group">
-                <label for="phone">Số điện thoại</label>
-                <input type="text" id="phone" name="phone" required>
-            </div>
-            <div class="form_actions">
-                <button type="button" onclick="addEmployee()">Thêm</button>
-                <button type="button" onclick="updateEmployee()">Sửa</button>
-                <button type="button" onclick="deleteEmployee()">Xóa</button>
-            </div>
-        </form>
-        <div class="message" id="message"></div>
+    <div class="HT_NhanVien">
+        <h1>Nhân viên</h1>
     </div>
+    <div class="container-wrapper">
+        <div class="containerQL" id="QLNV_form">
+            <h1>Quản lý nhân viên</h1>
+            <form id="employeeFormElement" class="form_nhanvien" action="/api/nhanvien/employee" method="POST">
+                <div class="form_group">
+                    <label for="employeeID">Mã nhân viên</label>
+                    <input type="text" id="NVemployeeID" name="employeeID" placeholder="Mã nhân viên">
+                    <div class="error-message" id="employeeIDError"></div>
+                </div>
+                <div class="form_group">
+                    <label for="employeeName">Tên</label>
+                    <input type="text" id="NVemployeeName" name="employeeName" placeholder="Tên nhân viên">
+                    <div class="error-message" id="nameError"></div>
+                </div>
+                <div class="form_group">
+                    <label for="employeeRole">Chức vụ</label>
+                    <input type="text" id="NVemployeeRole" name="employeeRole" placeholder="Chức vụ">
+                    <div class="error-message" id="roleError"></div>
+                </div>
+                <div class="form_group">
+                    <label for="employeePhone">Số điện thoại</label>
+                    <input type="text" id="NVemployeePhone" name="employeePhone" placeholder="Số điện thoại">
+                    <div class="error-message" id="phoneError"></div>
+                </div>
+                <div class="success-message" id="employeeSuccessMessage"></div>
+                <div class="error-message" id="employeeErrorMessage"></div>
+                <div class="form_actions">
+                    <input type="submit" name="them" value="Thêm" class="Them_submit">
+                    <input type="submit" name="sua" value="Sửa" class="Sua_submit">
+                    <input type="submit" name="xoa" value="Xóa" class="Xoa_submit">
+                </div>
+            </form>
+            <div class="message" id="message"></div>
+        </div>
 
+        <div class="containerDS" id="DSNV_form">
+            <h1>Danh sách nhân viên</h1>
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>Mã NV</th>
+                        <th>Tên</th>
+                        <th>Chức vụ</th>
+                        <th>Số điện thoại</th>
+                    </tr>
+                </thead>
+                <tbody id="employeeTableBody"></tbody>
+            </table>
+        </div>
+    </div>
     <div id="overlay" class="hidden"></div>
 
     <script>
@@ -139,17 +164,17 @@
             document.getElementById('registerForm').style.display = 'none';
             document.getElementById('overlay').style.display = 'block';
         }
-
-        function showNhanVienForm() {
-            window.location.href = '/FrontEnd/html/NhanVienForm.html';
-        }
     </script>
+
     <script src="/FrontEnd/js/scriptLogin.js"></script>
     <script src="/FrontEnd/js/scriptHienMK.js"></script>
     <script src="/FrontEnd/js/scriptQuenMk.js"></script>
     <script src="/FrontEnd/js/scriptAnUserVaDX.js"></script>
     <script src="/FrontEnd/js/scriptHienDNvaDK.js"></script>
     <script src="/FrontEnd/js/scriptMenu.js"></script>
+    <script src="/FrontEnd/js/scriptNhanVien.js"></script>
+    <script src="/FrontEnd/js/scriptDSNV.js"></script>
+
 </body>
 
 </html>

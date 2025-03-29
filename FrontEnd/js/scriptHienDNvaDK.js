@@ -1,17 +1,3 @@
-function logoutUser() {
-    // Xóa dữ liệu đăng nhập
-    localStorage.removeItem("loggedInUser");
-
-    // Hiển thị lại nút đăng nhập và đăng ký
-    document.querySelectorAll(".btn_Login").forEach(btn => btn.style.display = "inline-block");
-
-    // Ẩn phần user-info
-    document.getElementById("userinfo").style.display = "none";
-
-    // Tải lại trang để cập nhật giao diện
-    location.reload();
-}
-
 function loginUser(username) {
     localStorage.setItem("loggedInUser", username);
     
