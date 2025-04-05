@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
 
                 passwordDisplay.textContent = `Mật khẩu mới của bạn: ${result.password}`;
-                passwordDisplay.style.color = 'green';
+                passwordDisplay.style.color = 'rgb(138, 255, 142);';
 
             } catch (error) {
                 errorMessage.textContent = error.message || 'Đã xảy ra lỗi. Vui lòng thử lại.';

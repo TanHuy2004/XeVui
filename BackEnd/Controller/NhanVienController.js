@@ -1,9 +1,8 @@
-const express = require('express');
+const express = require('express'); 
 const { sql, poolPromise } = require('../config/db');
 
 const router = express.Router();
 
-// Add middleware to parse JSON request bodies
 router.use(express.json());
 
 // API Thêm nhân viên
@@ -139,45 +138,37 @@ router.put('/employee', async (req, res) => {
         res.status(500).json({ message: 'Lỗi server', error: err.message });
     }
 });
-
-router.delete('/employee/:employeeID', async (req, res) => { // Add :employeeID to the route
+router.delete('/employee/:employeeID', async (req, res) => {
     try {
-        const { employeeID } = req.params; // Lấy ID từ URL
-        console.log("🗑️ Yêu cầu xóa nhân viên với ID:", employeeID);
-
-        if (!employeeID || employeeID.length !== 5) { // Validate employeeID length
-            console.log("⚠️ ID nhân viên không hợp lệ!");
-            return res.status(400).json({ message: 'ID nhân viên không hợp lệ. Mã phải có đúng 5 ký tự.' });
+        const { employeeID } = req.params;
+        
+        if (!employeeID) {
+            return res.status(400).json({ message: "Mã nhân viên không hợp lệ!" });
         }
 
         const pool = await poolPromise;
 
-        // Kiểm tra xem nhân viên có tồn tại không
-        const checkEmployeeQuery = `SELECT 1 FROM Employee WHERE ID_NV = @employeeID`;
-        const checkEmployeeResult = await pool.request()
+        const checkQuery = `SELECT 1 FROM Employee WHERE ID_NV = @employeeID`;
+        const checkResult = await pool.request()
             .input('employeeID', sql.VarChar, employeeID)
-            .query(checkEmployeeQuery);
+            .query(checkQuery);
 
-        if (checkEmployeeResult.recordset.length === 0) {
-            console.log("⚠️ Nhân viên không tồn tại!");
-            return res.status(404).json({ message: 'Mã nhân viên không tồn tại' });
+        if (checkResult.recordset.length === 0) {
+            return res.status(404).json({ message: "Nhân viên không tồn tại!" });
         }
 
-        // Xóa nhân viên
         const deleteQuery = `DELETE FROM Employee WHERE ID_NV = @employeeID`;
-        console.log("📝 Thực thi truy vấn SQL:", deleteQuery);
-
         await pool.request()
             .input('employeeID', sql.VarChar, employeeID)
             .query(deleteQuery);
 
-        console.log("✅ Xóa nhân viên thành công!");
+        console.log(`✅ Đã xóa nhân viên ${employeeID} thành công!`);  // Kiểm tra server log
+
         res.status(200).json({ message: 'Xóa nhân viên thành công!' });
     } catch (err) {
         console.error("❌ Lỗi server:", err);
         res.status(500).json({ message: 'Lỗi server', error: err.message });
     }
 });
-
 
 module.exports = router;

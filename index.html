@@ -8,31 +8,29 @@
     <link rel="stylesheet" href="/FrontEnd/css/style_login.css">
     <link rel="stylesheet" href="/FrontEnd/css/style.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
 </head>
 
 <body>
     <div class="box" id="trangchuForm">
         <header>
-            <div class="ham-menu" id="hammenu">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
             <h2 class="logo">
                 <img src="/FrontEnd/HinhAnh/logo.png" alt="Logo">
             </h2>
-            <ul class="menu-list">
-                <li><a href="#">Khách hàng</a></li>
-                <li><a href="#">Chuyến xe</a></li>
-                <li><a href="#">Tuyến đường</a></li>
-                <li><a href="#" onclick="showNhanVienForm()">Nhân viên</a></li>
-                <li><a href="#">Nhà xe</a></li>
-            </ul>
-
             <nav class="navigation">
                 <a href="http://localhost:9999/DUAN_XEVUI/index.html">Trang chủ</a>
                 <a href="#" onclick="showDatVe()">Đặt vé</a>
-                <a href="#" onclick="showDatVe()">Tin tức</a>
+                <div class="dropdown" id="heThongDropdown">
+                    <a href="#" class="dropdown-toggle">Hệ thống</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#" onclick="showKhachHangForm()"><i class="fa fa-user"></i> Khách hàng</a></li>
+                        <li><a href="#"><i class='fas fa-route'></i> Tuyến đường</a></li>
+                        <li><a href="#" onclick="showChuyenXeForm()"><i class="fa fa-car"></i> Chuyến xe</a></li>
+                        <li><a href="#" onclick="showNhanVienForm()"><i class="fa fa-users"></i> Nhân viên</a></li>
+                        <li><a href="#" onclick="showNhaXeForm()"><i class="fa fa-house"></i> Nhà xe</a></li>
+                    </ul>
+                </div>
                 <button class="btn_Login" onclick="showLogin()">Đăng nhập</button>
                 <button class="btn_Login" onclick="showRegister()">Đăng ký</button>
                 <div class="user-info" id="userinfo">
@@ -42,6 +40,73 @@
 
             </nav>
         </header>
+        <div class="search-form-container">
+            <h1 class="search-title">XE VUI LUÔN ĐỒNG HÀNH CÙNG BẠN</h1>
+            <form class="search-form">
+                <select title="text" name="departure" class="form-input">
+                    <option value="" disabled selected hidden>Chọn điểm xuất phát</option>
+                    <option value="HaNoi">Hà Nội</option>
+                    <option value="DaNang">Đà Nẵng</option>
+                    <option value="HoChiMinh">Hồ Chí Minh</option>
+                </select>
+
+                <select title="text" name="destination" class="form-input">
+                    <option value="" disabled selected hidden>Chọn điểm đến</option>
+                    <option value="HaNoi">Hà Nội</option>
+                    <option value="DaNang">Đà Nẵng</option>
+                    <option value="HoChiMinh">Hồ Chí Minh</option>
+                </select>
+
+                <input type="date" name="travel-date" class="form-input" placeholder="Ngày đi">
+                <button type="submit" class="search-button">Tìm kiếm</button>
+            </form>
+        </div>
+        <footer>
+            <footer class="footer">
+                <div class="footer-container">
+                    <!-- Logo & Giới thiệu -->
+                    <div class="footer-section">
+                        <h2 class="logo">Xe Vui</h2>
+                        <p>Đặt vé xe dễ dàng và an toàn.</p>
+                    </div>
+
+                    <!-- Điều hướng nhanh -->
+                    <div class="footer-section">
+                        <h3>Thông tin</h3>
+                        <ul>
+                            <li><a href="#">Về chúng tôi</a></li>
+                            <li><a href="#">Hướng dẫn đặt vé</a></li>
+                            <li><a href="#">Chính sách bảo mật</a></li>
+                            <li><a href="#">Điều khoản sử dụng</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Liên hệ -->
+                    <div class="footer-section">
+                        <h3>Liên hệ</h3>
+                        <p>📍 123A đường 9ABC, Quận 9, TP.HCM </p>
+                        <p>📞 0123 456 789</p>
+                        <p>📧 support@xevui.com</p>
+                    </div>
+
+                    <!-- Mạng xã hội -->
+                    <div class="footer-section">
+                        <h3>Kết nối</h3>
+                        <div class="social-icons">
+                            <a href="#"><i class="fab fa-facebook"> facebook</i></a>
+                            <a href="#"><i class="fab fa-instagram"> instagram</i></a>
+                            <a href="#"><i class="fab fa-twitter"> twitter</i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="footer-bottom">
+                    <p>© 2025 XeVui. Thank you!</p>
+                </div>
+            </footer>
+
+        </footer>
+
     </div>
 
     <div class="login" id="loginForm">
@@ -60,6 +125,7 @@
                     <i class="fa fa-eye"></i>
                 </div>
 
+
                 <div class="error-message" id="loginPasswordError"></div>
             </div>
             <div class="forgot__register_link">
@@ -72,6 +138,7 @@
             <div class="success-message" id="loginSuccessMessage"></div>
             <div class="error-message" id="loginErrorMessage"></div>
         </form>
+
     </div>
 
     <div class="register" id="registerForm">
@@ -192,8 +259,15 @@
         function showNhanVienForm() {
             window.location.href = '/FrontEnd/html/NhanVienForm.html';
         }
-
-
+        function showKhachHangForm() {
+            window.location.href = '/FrontEnd/html/KhachHangForm.html';
+        }
+        function showNhaXeForm() {
+            window.location.href = '/FrontEnd/html/NhaXeForm.html';
+        }
+        function showChuyenXeForm() {
+            window.location.href = '/FrontEnd/html/ChuyenXe.html';
+        }
 
     </script>
     <script src="/FrontEnd/js/scriptLogin.js"></script>
@@ -201,7 +275,6 @@
     <script src="/FrontEnd/js/scriptQuenMk.js"></script>
     <script src="/FrontEnd/js/scriptAnUserVaDX.js"></script>
     <script src="/FrontEnd/js/scriptHienDNvaDK.js"></script>
-    <script src="/FrontEnd/js/scriptMenu.js"></script>
 </body>
 
 </html>

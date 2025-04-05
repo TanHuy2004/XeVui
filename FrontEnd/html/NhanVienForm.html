@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 
 <head>
     <meta charset="UTF-8">
@@ -9,29 +9,25 @@
     <link rel="stylesheet" href="/FrontEnd/css/style.css">
     <link rel="stylesheet" href="/FrontEnd/css/style_NhanVien.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
-
 <header>
-    <div class="ham-menu" id="hammenu">
-        <span></span>
-        <span></span>
-        <span></span>
-    </div>
     <h2 class="logo">
         <img src="/FrontEnd/HinhAnh/logo.png" alt="Logo">
     </h2>
-    <ul class="menu-list">
-        <li><a href="#">Khách hàng</a></li>
-        <li><a href="#">Chuyến xe</a></li>
-        <li><a href="#">Tuyến đường</a></li>
-        <li><a href="#" onclick="showNhanVienForm()">Nhân viên</a></li>
-        <li><a href="#">Nhà xe</a></li>
-    </ul>
-
     <nav class="navigation">
-        <a href="http://localhost:9999/DUAN_XEVUI/index.html">Trang chủ</a>
+        <a href="http://localhost:9999/XEVUI-Main/index.html">Trang chủ</a>
         <a href="#" onclick="showDatVe()">Đặt vé</a>
-        <a href="#" onclick="showDatVe()">Tin tức</a>
+        <div class="dropdown">
+            <a href="#" class="dropdown-toggle">Hệ thống</a>
+            <ul class="dropdown-menu">
+                <li><a href="#" onclick="showKhachHangForm()"><i class="fa fa-user"></i> Khách hàng</a></li>
+                <li><a href="#"><i class='fas fa-route'></i> Tuyến đường</a></li>
+                <li><a href="#" onclick="showChuyenXeForm()"><i class="fa fa-car"></i> Chuyến xe</a></li>
+                <li><a href="#" onclick="showNhanVienForm()"><i class="fa fa-users"></i> Nhân viên</a></li>
+                <li><a href="#" onclick="showNhaXeForm()"><i class="fa fa-house"></i> Nhà xe</a></li>
+            </ul>
+        </div>
         <button class="btn_Login" onclick="showLogin()">Đăng nhập</button>
         <button class="btn_Login" onclick="showRegister()">Đăng ký</button>
         <div class="user-info" id="userinfo">
@@ -53,29 +49,28 @@
                 <div class="form_group">
                     <label for="employeeID">Mã nhân viên</label>
                     <input type="text" id="NVemployeeID" name="employeeID" placeholder="Mã nhân viên">
-                    <div class="error-message" id="employeeIDError"></div>
+                    <div class="error-message" id="errorID"></div>
                 </div>
                 <div class="form_group">
-                    <label for="employeeName">Tên</label>
-                    <input type="text" id="NVemployeeName" name="employeeName" placeholder="Tên nhân viên">
-                    <div class="error-message" id="nameError"></div>
+                    <label for="employeeName">Họ và tên</label>
+                    <input type="text" id="NVemployeeName" name="employeeName" placeholder="Họ và tên">
+                    <div class="error-message" id="errorName"></div>
                 </div>
                 <div class="form_group">
                     <label for="employeeRole">Chức vụ</label>
                     <input type="text" id="NVemployeeRole" name="employeeRole" placeholder="Chức vụ">
-                    <div class="error-message" id="roleError"></div>
+                    <div class="error-message" id="errorRole"></div>
                 </div>
                 <div class="form_group">
                     <label for="employeePhone">Số điện thoại</label>
                     <input type="text" id="NVemployeePhone" name="employeePhone" placeholder="Số điện thoại">
-                    <div class="error-message" id="phoneError"></div>
+                    <div class="error-message" id="errorPhone"></div>
                 </div>
                 <div class="success-message" id="employeeSuccessMessage"></div>
                 <div class="error-message" id="employeeErrorMessage"></div>
                 <div class="form_actions">
                     <input type="submit" name="them" value="Thêm" class="Them_submit">
-                    <input type="submit" name="sua" value="Sửa" class="Sua_submit">
-                    <input type="submit" name="xoa" value="Xóa" class="Xoa_submit">
+                    <input type="submit" name="sua" value="Chấp nhận sửa" class="Sua_submit">
                 </div>
             </form>
             <div class="message" id="message"></div>
@@ -86,10 +81,11 @@
             <table border="1">
                 <thead>
                     <tr>
-                        <th>Mã NV</th>
-                        <th>Tên</th>
+                        <th>Mã</th>
+                        <th>Họ và tên</th>
                         <th>Chức vụ</th>
-                        <th>Số điện thoại</th>
+                        <th>SĐT</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody id="employeeTableBody"></tbody>
@@ -164,6 +160,16 @@
             document.getElementById('registerForm').style.display = 'none';
             document.getElementById('overlay').style.display = 'block';
         }
+
+        function showKhachHangForm() {
+            window.location.href = '/FrontEnd/html/KhachHangForm.html';
+        }
+        function showNhaXeForm() {
+            window.location.href = '/FrontEnd/html/NhaXeForm.html';
+        }
+        function showChuyenXeForm() {
+            window.location.href = '/FrontEnd/html/ChuyenXe.html';
+        }
     </script>
 
     <script src="/FrontEnd/js/scriptLogin.js"></script>
@@ -171,9 +177,9 @@
     <script src="/FrontEnd/js/scriptQuenMk.js"></script>
     <script src="/FrontEnd/js/scriptAnUserVaDX.js"></script>
     <script src="/FrontEnd/js/scriptHienDNvaDK.js"></script>
-    <script src="/FrontEnd/js/scriptMenu.js"></script>
     <script src="/FrontEnd/js/scriptNhanVien.js"></script>
-    <script src="/FrontEnd/js/scriptDSNV.js"></script>
+
+
 
 </body>
 

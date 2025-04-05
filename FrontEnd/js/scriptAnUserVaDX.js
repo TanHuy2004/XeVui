@@ -4,11 +4,9 @@ document.addEventListener("DOMContentLoaded", function () {
     const usernameDisplay = document.getElementById("usernameDisplay");
     const loginButton = document.querySelector(".btn_Login");
     const registerButton = document.querySelectorAll(".btn_Login")[1];
-    const hamMenu = document.getElementById("hammenu");
-
     const trangChuLink = document.querySelector(".navigation a:nth-child(1)");
     const datVeLink = document.querySelector(".navigation a:nth-child(2)");
-    const tinTucLink = document.querySelector(".navigation a:nth-child(3)");
+    const heThongDropdown = document.getElementById("heThongDropdown"); // Thêm biến cho dropdown Hệ thống
 
     if (loggedInUser) {
         userInfo.style.display = "flex";
@@ -19,14 +17,12 @@ document.addEventListener("DOMContentLoaded", function () {
         // Hiển thị các mục
         trangChuLink.style.display = "inline";
         datVeLink.style.display = "inline";
-        tinTucLink.style.display = "inline";
     } else {
         userInfo.style.display = "none";
-        hamMenu.style.display = "none";
         // Ẩn các mục khi chưa đăng nhập
         trangChuLink.style.display = "none";
         datVeLink.style.display = "none";
-        tinTucLink.style.display = "none";
+        heThongDropdown.style.display = "none"; // Ẩn dropdown Hệ thống
     }
 });
 
@@ -35,11 +31,12 @@ function logoutUser() {
     document.getElementById("userinfo").style.display = "none";
     document.querySelector(".btn_Login").style.display = "block";
     document.querySelectorAll(".btn_Login")[1].style.display = "block";
-    document.getElementById("hammenu").style.display = "none";
 
-    // Ẩn trang chủ, đặt vé và tin tức sau khi đăng xuất
+    // Ẩn trang chủ, đặt vé  sau khi đăng xuất
     document.querySelector(".navigation a:nth-child(1)").style.display = "none";
     document.querySelector(".navigation a:nth-child(2)").style.display = "none";
-    document.querySelector(".navigation a:nth-child(3)").style.display = "none";
-    window.location.href = "/DUAN_XEVUI/index.html"; 
+
+    // Redirect to the homepage using a relative path
+    window.location.href = "/XEVUI-Main";
+    applyRoleBasedAccess();
 }

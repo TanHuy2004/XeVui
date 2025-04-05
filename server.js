@@ -9,25 +9,30 @@ const app = express();
 // Middleware
 app.use(cors());
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
 
 // Import routes
+const khachHangRoutes = require("./BackEnd/Controller/KhachHangController");
 const nhanVienRoutes = require("./BackEnd/Controller/NhanVienController");
 const authRoutes = require("./BackEnd/Controller/LoginController");
 const quenMKRoutes = require("./BackEnd/Controller/QuenMKController");
+const nhaxeRoutes = require("./BackEnd/Controller/NhaXeController");
+const selectTenXeCTYRoutes = require("./BackEnd/Controller/SelectTenXeCTYController");
 
 // Register routes with unique prefixes to avoid conflicts
 app.use("/api/auth", authRoutes);
-app.use("/api/forgot-password", quenMKRoutes); // Changed prefix to avoid conflict
-app.use("/api/nhanvien", nhanVienRoutes); // Changed prefix to match frontend
+app.use("/api/forgot-password", quenMKRoutes); 
+app.use("/api/nhanvien", nhanVienRoutes); 
+app.use("/api/khachhang", khachHangRoutes);
+app.use("/api/nhaxe",nhaxeRoutes );
+app.use("/api/selectTenXeCTY", selectTenXeCTYRoutes); 
 
 // Serve static files
 app.use('/FrontEnd', express.static(path.join(__dirname, 'FrontEnd')));
-app.use('/DUAN_XEVUI/FrontEnd', express.static(path.join(__dirname, 'FrontEnd')));
+app.use('/XEVUI-MAIN/FrontEnd', express.static(path.join(__dirname, 'FrontEnd')));
 app.use('/HinhAnh', express.static(path.join(__dirname, 'FrontEnd/HinhAnh')));
 
-// Serve index.html for `/DUAN_XEVUI`
-app.get('/DUAN_XEVUI', (req, res) => {
+
+app.get('/XEVUI-MAIN', (req, res) => {
     res.sendFile(path.join(__dirname, 'index.html'));
 });
 

@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QL_XeVui</title>
+    <link rel="stylesheet" href="/FrontEnd/css/style_login.css">
+    <link rel="stylesheet" href="/FrontEnd/css/style.css">
+    <link rel="stylesheet" href="/FrontEnd/css/style_NhaXe.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<header>
+    <h2 class="logo">
+        <img src="/FrontEnd/HinhAnh/logo.png" alt="Logo">
+    </h2>
+    <nav class="navigation">
+        <a href="http://localhost:9999/XEVUI-Main/index.html">Trang chủ</a>
+        <a href="#" onclick="showDatVe()">Đặt vé</a>
+        <div class="dropdown">
+            <a href="#" class="dropdown-toggle">Hệ thống</a>
+            <ul class="dropdown-menu">
+                <li><a href="#" onclick="showKhachHangForm()"><i class="fa fa-user"></i> Khách hàng</a></li>
+                <li><a href="#"><i class='fas fa-route'></i> Tuyến đường</a></li>
+                <li><a href="#"><i class="fa fa-car"></i> Chuyến xe</a></li>
+                <li><a href="#" onclick="showNhanVienForm()"><i class="fa fa-users"></i> Nhân viên</a></li>
+                <li><a href="#" onclick="showNhaXeForm()"><i class="fa fa-house"></i> Nhà xe</a></li>
+            </ul>
+        </div>
+        <button class="btn_Login" onclick="showLogin()">Đăng nhập</button>
+        <button class="btn_Login" onclick="showRegister()">Đăng ký</button>
+        <div class="user-info" id="userinfo">
+            <button class="btn_Logout" onclick="logoutUser()">Đăng xuất</button>
+            <i class="fas fa-user-circle"></i> <span id="usernameDisplay"></span>
+        </div>
+
+    </nav>
+</header>
+
+<body>
+    <div class="HT_NhaXe">
+        <h1>Nhà xe</h1>
+    </div>
+    <div class="container-wrapper">
+        <div class="containerQL" id="QLNX_form">
+            <h1>Quản lý nhà xe</h1>
+            <form id="busCompanyFormElement" class="form_nhaxe" action="/api/nhaxe/bus-company" method="POST">
+                <div class="form_group">
+                    <label for="busCompanyID">Mã nhà xe</label>
+                    <input type="text" id="NXbusCompanyID" name="busCompanyID" placeholder="Mã nhà xe">
+                    <div class="error-message" id="errorID"></div>
+                </div>
+                <div class="form_group">
+                    <label for="busCompanyName">Tên nhà xe</label>
+                    <input type="text" id="NXbusCompanyName" name="name" placeholder="Tên nhà xe">
+                    <div class="error-message" id="errorName"></div>
+                </div>
+                <div class="form_group">
+                    <label for="busCompanyPhone">Số điện thoại</label>
+                    <input type="text" id="NXbusCompanyPhone" name="phone" placeholder="Số điện thoại">
+                    <div class="error-message" id="errorPhone"></div>
+                </div>
+                <div class="form_group">
+                    <label for="busCompanyAddress">Địa chỉ</label>
+                    <input type="text" id="NXbusCompanyAddress" name="address" placeholder="Địa chỉ">
+                    <div class="error-message" id="errorAddress"></div>
+                </div>
+                <div class="success-message" id="busCompanySuccessMessage"></div>
+                <div class="error-message" id="busCompanyErrorMessage"></div>
+                <div class="form_actions">
+                    <input type="submit" name="them" value="Thêm" class="Them_submit">
+                    <input type="submit" name="sua" value="Chấp nhận sửa" class="Sua_submit">
+                </div>
+            </form>
+            <div class="message" id="message"></div>
+        </div>
+
+        <div class="containerDS" id="DSNX_form">
+            <h1>Danh sách nhà xe</h1>
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>Mã</th>
+                        <th>Tên nhà xe</th>
+                        <th>SĐT</th>
+                        <th>Địa chỉ</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody id="busCompanyTableBody"></tbody>
+            </table>
+        </div>
+    </div>
+    <div id="overlay" class="hidden"></div>
+
+    <script>
+        // Chỉ đóng form khi nhấn vào overlay
+        document.getElementById('overlay').addEventListener('click', function () {
+            hideLogin();
+            hideRegister();
+            hideForgotPassword();
+        });
+
+        function showLogin() {
+            clearMessages();
+            clearForm('loginFormElement');
+            document.getElementById('loginForm').style.display = 'block';
+            document.getElementById('registerForm').style.display = 'none';
+            document.getElementById('forgotPasswordForm').style.display = 'none';
+            document.getElementById('overlay').style.display = 'block';
+        }
+        function hideLogin() {
+            document.getElementById('loginForm').style.display = 'none';
+            document.getElementById('overlay').style.display = 'none';
+        }
+
+        function showRegister() {
+            clearMessages();
+            clearForm('registerFormElement');
+            document.getElementById('registerForm').style.display = 'block';
+            document.getElementById('loginForm').style.display = 'none';
+            document.getElementById('forgotPasswordForm').style.display = 'none';
+            document.getElementById('overlay').style.display = 'block';
+        }
+        function hideRegister() {
+            document.getElementById('registerForm').style.display = 'none';
+            document.getElementById('overlay').style.display = 'none';
+        }
+
+        function showForgotPassword() {
+            clearMessages();
+            clearForm('forgotPasswordFormElement');
+            document.getElementById('forgotPasswordForm').style.display = 'block';
+            document.getElementById('loginForm').style.display = 'none';
+            document.getElementById('registerForm').style.display = 'none';
+            document.getElementById('overlay').style.display = 'block';
+        }
+
+        function hideForgotPassword() {
+            document.getElementById('forgotPasswordForm').style.display = 'none';
+            document.getElementById('overlay').style.display = 'none';
+        }
+
+        function clearMessages() {
+            const errorMessages = document.querySelectorAll('.error-message');
+            const successMessages = document.querySelectorAll('.success-message');
+            errorMessages.forEach(message => message.textContent = '');
+            successMessages.forEach(message => message.textContent = '');
+        }
+
+        function clearForm(formId) {
+            document.getElementById(formId).reset();
+        }
+
+        function showTrangChu() {
+            document.getElementById('trangchuForm').style.display = 'block';
+            document.getElementById('forgotPasswordForm').style.display = 'none';
+            document.getElementById('loginForm').style.display = 'none';
+            document.getElementById('registerForm').style.display = 'none';
+            document.getElementById('overlay').style.display = 'block';
+        }
+
+        function showKhachHangForm() {
+            window.location.href = '/FrontEnd/html/KhachHangForm.html';
+        }
+        function showNhanVienForm() {
+            window.location.href = '/FrontEnd/html/NhanVienForm.html';
+        }
+    </script>
+
+    <script src="/FrontEnd/js/scriptLogin.js"></script>
+    <script src="/FrontEnd/js/scriptHienMK.js"></script>
+    <script src="/FrontEnd/js/scriptQuenMk.js"></script>
+    <script src="/FrontEnd/js/scriptAnUserVaDX.js"></script>
+    <script src="/FrontEnd/js/scriptHienDNvaDK.js"></script>
+    <script src="/FrontEnd/js/scriptNhaXe.js"></script>
+
+
+</body>
+
+</html>

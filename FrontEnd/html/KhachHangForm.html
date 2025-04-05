@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QL_XeVui</title>
+    <link rel="stylesheet" href="/FrontEnd/css/style_login.css">
+    <link rel="stylesheet" href="/FrontEnd/css/style.css">
+    <link rel="stylesheet" href="/FrontEnd/css/style_KhachHang.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+
+<header>
+    <h2 class="logo">
+        <img src="/FrontEnd/HinhAnh/logo.png" alt="Logo">
+    </h2>
+    <nav class="navigation">
+        <a href="http://localhost:9999/XEVUI-Main/index.html">Trang chủ</a>
+        <a href="#" onclick="showDatVe()">Đặt vé</a>
+        <div class="dropdown">
+            <a href="#" class="dropdown-toggle">Hệ thống</a>
+            <ul class="dropdown-menu">
+                <li><a href="#" onclick="showKhachHangForm()"><i class="fa fa-user"></i> Khách hàng</a></li>
+                <li><a href="#"><i class='fas fa-route'></i> Tuyến đường</a></li>
+                <li><a href="#" onclick="showChuyenXeForm()"><i class="fa fa-car"></i> Chuyến xe</a></li>
+                <li><a href="#" onclick="showNhanVienForm()"><i class="fa fa-users"></i> Nhân viên</a></li>
+                <li><a href="#" onclick="showNhaXeForm()"><i class="fa fa-house"></i> Nhà xe</a></li>
+            </ul>
+        </div>
+        <button class="btn_Login" onclick="showLogin()">Đăng nhập</button>
+        <button class="btn_Login" onclick="showRegister()">Đăng ký</button>
+        <div class="user-info" id="userinfo">
+            <button class="btn_Logout" onclick="logoutUser()">Đăng xuất</button>
+            <i class="fas fa-user-circle"></i> <span id="usernameDisplay"></span>
+        </div>
+    </nav>
+</header>
+
+<body>
+    <div class="HT_KhachHang">
+        <h1>Khách hàng</h1>
+    </div>
+    <div class="container-wrapper">
+        <div class="containerQL" id="QLKH_form">
+            <h1>Quản lý khách hàng</h1>
+            <form id="customerFormElement" class="form_khachhang" action="/api/khachhang/customer" method="POST">
+                <div class="form_group">
+                    <label for="customerID">Mã khách hàng</label>
+                    <input type="text" id="KHcustomerID" name="customerID" placeholder="Mã khách hàng" maxlength="5">
+                    <div class="error-message" id="errorID"></div>
+                </div>
+                <div class="form_group">
+                    <label for="customerName">Họ và tên</label>
+                    <input type="text" id="KHcustomerName" name="customerName" placeholder="Họ và tên" maxlength="30">
+                    <div class="error-message" id="errorName"></div>
+                </div>
+                <div class="form_group">
+                    <label for="customerPhone">Số điện thoại</label>
+                    <input type="text" id="KHcustomerPhone" name="customerPhone" placeholder="Số điện thoại"
+                        maxlength="11">
+                    <div class="error-message" id="errorPhone"></div>
+                </div>
+                <div class="form_group">
+                    <label for="customerEmail">Email</label>
+                    <input type="email" id="KHcustomerEmail" name="customerEmail" placeholder="Email" maxlength="100">
+                    <div class="error-message" id="errorEmail"></div>
+                </div>
+                <div class="form_group">
+                    <label for="customerAddress">Địa chỉ</label>
+                    <input type="text" id="KHcustomerAddress" name="customerAddress" placeholder="Địa chỉ"
+                        maxlength="100">
+                    <div class="error-message" id="errorAddress"></div>
+                </div>
+                <div class="success-message" id="customerSuccessMessage"></div>
+                <div class="error-message" id="customerErrorMessage"></div>
+                <div class="form_actions">
+                    <input type="submit" name="them" value="Thêm" class="Them_submit">
+                    <input type="submit" name="sua" value="Chấp nhận sửa" class="Sua_submit">
+                </div>
+            </form>
+            <div class="message" id="message"></div>
+        </div>
+
+        <div class="containerDS" id="DSKH_form">
+            <h1>Danh sách khách hàng</h1>
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>Mã </th>
+                        <th>Họ và tên</th>
+                        <th>SĐT</th>
+                        <th>Email</th>
+                        <th>Địa chỉ</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody id="customerTableBody"></tbody>
+            </table>
+        </div>
+    </div>
+    <div id="overlay" class="hidden"></div>
+
+    <script>
+        document.getElementById('overlay').addEventListener('click', function () {
+            hideLogin();
+            hideRegister();
+            hideForgotPassword();
+        });
+
+        function showLogin() {
+            clearMessages();
+            clearForm('loginFormElement');
+            document.getElementById('loginForm').style.display = 'block';
+            document.getElementById('registerForm').style.display = 'none';
+            document.getElementById('forgotPasswordForm').style.display = 'none';
+            document.getElementById('overlay').style.display = 'block';
+        }
+        function hideLogin() {
+            document.getElementById('loginForm').style.display = 'none';
+            document.getElementById('overlay').style.display = 'none';
+        }
+
+        function showRegister() {
+            clearMessages();
+            clearForm('registerFormElement');
+            document.getElementById('registerForm').style.display = 'block';
+            document.getElementById('loginForm').style.display = 'none';
+            document.getElementById('forgotPasswordForm').style.display = 'none';
+            document.getElementById('overlay').style.display = 'block';
+        }
+        function hideRegister() {
+            document.getElementById('registerForm').style.display = 'none';
+            document.getElementById('overlay').style.display = 'none';
+        }
+
+        function clearMessages() {
+            const errorMessages = document.querySelectorAll('.error-message');
+            const successMessages = document.querySelectorAll('.success-message');
+            errorMessages.forEach(message => message.textContent = '');
+            successMessages.forEach(message => message.textContent = '');
+        }
+
+        function clearForm(formId) {
+            document.getElementById(formId).reset();
+        }
+        function showNhanVienForm() {
+            window.location.href = '/FrontEnd/html/NhanVienForm.html';
+        }
+        function showNhaXeForm() {
+            window.location.href = '/FrontEnd/html/NhaXeForm.html';
+        }
+        function showChuyenXeForm() {
+            window.location.href = '/FrontEnd/html/ChuyenXe.html';
+        }
+    </script>
+
+    <script src="/FrontEnd/js/scriptLogin.js"></script>
+    <script src="/FrontEnd/js/scriptHienMK.js"></script>
+    <script src="/FrontEnd/js/scriptQuenMk.js"></script>
+    <script src="/FrontEnd/js/scriptAnUserVaDX.js"></script>
+    <script src="/FrontEnd/js/scriptHienDNvaDK.js"></script>
+    <script src="/FrontEnd/js/scriptKhachHang.js"></script>
+
+</body>
+
+</html>
