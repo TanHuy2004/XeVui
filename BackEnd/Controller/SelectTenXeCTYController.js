@@ -17,7 +17,7 @@ router.get('/selectTenXeCTY', async (req, res) => {
             return res.status(500).json({ message: 'Không thể kết nối đến database' });
         }
 
-        const selectQuery = `SELECT  Name FROM BusCompany`;
+        const selectQuery = `SELECT BusCompanyID, Name FROM BusCompany`;
         console.log("📝 Thực thi truy vấn SQL:", selectQuery);
 
         const result = await pool.request().query(selectQuery);

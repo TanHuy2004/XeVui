@@ -123,14 +123,14 @@ th:nth-child(5) {
     width: 20%; /* Đặt chiều rộng của cột "Địa chỉ" */
     text-align: center; /* Canh giữa địa chỉ */
 }
-.HT_ChuyenXe{
+.HT_Xe{
     width: 18%;
     background-color: #1565c0;
     margin-top: 90px;
     text-align: center;
     border-radius: 100px;
 }
-.HT_ChuyenXe h1{
+.HT_Xe h1{
     font-size: 40px;
     color: rgb(255, 255, 255);
 }
