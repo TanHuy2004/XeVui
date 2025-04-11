@@ -10,6 +10,7 @@ body {
 
 .container-wrapper {
     margin-top: 20px;
+    margin-bottom: 20px;
     display: flex;
     justify-content: center;
     gap: 30px; /* Khoảng cách giữa hai form */
@@ -29,16 +30,32 @@ body {
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-    width: 70%; /* Reduced width */
+    width: 100%;
     text-align: center;
+}
+
+.table-scroll {
+    max-height: 400px; /* hoặc bất kỳ chiều cao nào bạn muốn */
+    overflow-y: auto; /* Cho phép cuộn dọc */
+}
+
+/* Tùy chỉnh thanh cuộn cho Webkit (Chrome, Safari) */
+.table-scroll::-webkit-scrollbar {
+    width: 2px; 
+}
+.table-scroll::-webkit-scrollbar-thumb {
+    background: black;
+    border-radius: 10px;
+}
+.table-scroll table.body {
+    margin-top: 0; /* Xóa khoảng cách phía trên bảng nội dung */
 }
 h1 {
     color: #1565c0;
 }
 
 .form_group {
-    margin-top: 30px;
-    margin-bottom: 10px;
+    margin-top: 20px;
     text-align: left;
 }
 
@@ -102,36 +119,22 @@ th {
     color: white;
 }
 
-th:nth-child(1) {
-    width: 10%; /* Đặt chiều rộng của cột "Mã" */
-    text-align: center; /* Canh giữa nội dung của th này */
-}
+thead th:nth-child(1), .body td:nth-child(1) { width: 5%; }
+thead th:nth-child(2), .body td:nth-child(2) { width: 10%; }
+thead th:nth-child(3), .body td:nth-child(3) { width: 10%; }
+thead th:nth-child(4), .body td:nth-child(4) { width: 10%; }
+thead th:nth-child(5), .body td:nth-child(5) { width: 12%; }
 
-th:nth-child(2) {
-    width: 20%; /* Đặt chiều rộng của cột "Họ và tên" */
-}
-
-th:nth-child(3) {
-    width: 20%; /* Đặt chiều rộng của cột "SĐT" */
-    text-align: center; /* Canh giữa số điện thoại */
-}
-
-th:nth-child(4) {
-    width: 30%; /* Đặt chiều rộng của cột "Email" */
-}
-th:nth-child(5) {
-    width: 20%; /* Đặt chiều rộng của cột "Địa chỉ" */
-    text-align: center; /* Canh giữa địa chỉ */
-}
 .HT_Xe{
-    width: 18%;
+    width: 5%;
+    padding: 5px;
     background-color: #1565c0;
     margin-top: 90px;
     text-align: center;
     border-radius: 100px;
 }
 .HT_Xe h1{
-    font-size: 40px;
+    font-size: 20px;
     color: rgb(255, 255, 255);
 }
 

@@ -140,6 +140,23 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById("NXbusCompanyPhone").value = phone;
         document.getElementById("NXbusCompanyAddress").value = address;
     };
-
+    const busCompanyFields = [
+        { id: "NXbusCompanyID", errorId: "errorID" },
+        { id: "NXbusCompanyName", errorId: "errorName" },
+        { id: "NXbusCompanyPhone", errorId: "errorPhone" },
+        { id: "NXbusCompanyAddress", errorId: "errorAddress" }
+    ];
+    
+    busCompanyFields.forEach(field => {
+        const input = document.getElementById(field.id);
+        if (input) {
+            input.addEventListener("input", () => {
+                document.getElementById(field.errorId).textContent = "";
+                document.getElementById("busCompanyErrorMessage").textContent = "";
+                document.getElementById("busCompanySuccessMessage").textContent = "";
+            });
+        }
+    });
+    
     loadBusCompanies();
 });

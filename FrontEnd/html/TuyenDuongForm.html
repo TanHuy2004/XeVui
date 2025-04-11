@@ -7,10 +7,11 @@
     <title>QL_XeVui</title>
     <link rel="stylesheet" href="/FrontEnd/css/style_login.css">
     <link rel="stylesheet" href="/FrontEnd/css/style.css">
-    <link rel="stylesheet" href="/FrontEnd/css/style_NhanVien.css">
+    <link rel="stylesheet" href="/FrontEnd/css/style_TuyenDuong.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
+
 <header>
     <h2 class="logo">
         <img src="/FrontEnd/HinhAnh/logo.png" alt="Logo">
@@ -35,40 +36,46 @@
             <button class="btn_Logout" onclick="logoutUser()">Đăng xuất</button>
             <i class="fas fa-user-circle"></i> <span id="usernameDisplay"></span>
         </div>
-
     </nav>
 </header>
 
 <body>
-    <div class="HT_NhanVien">
-        <h1>Nhân viên</h1>
+    <div class="HT_TuyenDuong">
+        <h1>Tuyến đường</h1>
     </div>
     <div class="container-wrapper">
-        <div class="containerQL" id="QLNV_form">
-            <h1>Quản lý nhân viên</h1>
-            <form id="employeeFormElement" class="form_nhanvien" action="/api/nhanvien/employee" method="POST">
+        <div class="containerQL" id="QLTD_form">
+            <h1>Quản lý tuyến đường</h1>
+            <form id="routeFormElement" class="form_tuyenduong" action="/api/tuyenduong/route" method="POST">
                 <div class="form_group">
-                    <label for="employeeID">Mã nhân viên</label>
-                    <input type="text" id="NVemployeeID" name="employeeID" placeholder="Mã nhân viên">
+                    <label for="routeID">Mã tuyến đường</label>
+                    <input type="text" id="TDrouteID" name="routeID" placeholder="Mã tuyến đường" maxlength="5">
                     <div class="error-message" id="errorID"></div>
                 </div>
                 <div class="form_group">
-                    <label for="employeeName">Họ và tên</label>
-                    <input type="text" id="NVemployeeName" name="employeeName" placeholder="Họ và tên">
-                    <div class="error-message" id="errorName"></div>
+                    <label for="departure">Điểm khởi hành</label>
+                    <input type="text" id="TDdeparture" name="departure" placeholder="Điểm khởi hành" maxlength="50">
+                    <div class="error-message" id="errorDeparture"></div>
                 </div>
                 <div class="form_group">
-                    <label for="employeeRole">Chức vụ</label>
-                    <input type="text" id="NVemployeeRole" name="employeeRole" placeholder="Chức vụ">
-                    <div class="error-message" id="errorRole"></div>
+                    <label for="destination">Điểm đến</label>
+                    <input type="text" id="TDdestination" name="destination" placeholder="Điểm đến" maxlength="50">
+                    <div class="error-message" id="errorDestination"></div>
                 </div>
                 <div class="form_group">
-                    <label for="employeePhone">Số điện thoại</label>
-                    <input type="text" id="NVemployeePhone" name="employeePhone" placeholder="Số điện thoại">
-                    <div class="error-message" id="errorPhone"></div>
+                    <label for="distance">Khoảng cách (Km)</label>
+                    <input type="number" id="TDdistance" name="distance" placeholder="Khoảng cách" min="1" step="0.001">
+                    <div class="error-message" id="errorDistance"></div>
                 </div>
-                <div class="success-message" id="employeeSuccessMessage"></div>
-                <div class="error-message" id="employeeErrorMessage"></div>
+
+                <div class="form_group">
+                    <label for="basePrice">Giá tuyến</label>
+                    <input type="text" id="TDbasePrice" name="basePrice" placeholder="Giá tuyến">
+                    <div class="error-message" id="errorBasePrice"></div>
+                </div>
+
+                <div class="success-message" id="routeSuccessMessage"></div>
+                <div class="error-message" id="routeErrorMessage"></div>
                 <div class="form_actions">
                     <input type="submit" name="them" value="Thêm" class="Them_submit">
                     <input type="submit" name="sua" value="Chấp nhận sửa" class="Sua_submit">
@@ -77,26 +84,35 @@
             <div class="message" id="message"></div>
         </div>
 
-        <div class="containerDS" id="DSNV_form">
-            <h1>Danh sách nhân viên</h1>
-            <table border="1">
+        <div class="containerDS" id="DSTD_form">
+            <h1>Danh sách tuyến đường</h1>
+            <!-- Bảng tiêu đề cố định -->
+            <table class="header" border="1">
                 <thead>
                     <tr>
                         <th>Mã</th>
-                        <th>Họ và tên</th>
-                        <th>Chức vụ</th>
-                        <th>SĐT</th>
+                        <th>Điểm khởi hành</th>
+                        <th>Điểm đến</th>
+                        <th>Khoảng cách (Km)</th>
+                        <th>Giá tuyến (VND)</th>
                         <th></th>
                     </tr>
                 </thead>
-                <tbody id="employeeTableBody"></tbody>
             </table>
+
+            <!-- Bảng nội dung có thể cuộn -->
+            <div class="table-scroll">
+                <table class="body" border="1">
+                    <tbody id="routeTableBody"></tbody>
+                </table>
+            </div>
         </div>
+
+    </div>
     </div>
     <div id="overlay" class="hidden"></div>
 
     <script>
-        // Chỉ đóng form khi nhấn vào overlay
         document.getElementById('overlay').addEventListener('click', function () {
             hideLogin();
             hideRegister();
@@ -129,20 +145,6 @@
             document.getElementById('overlay').style.display = 'none';
         }
 
-        function showForgotPassword() {
-            clearMessages();
-            clearForm('forgotPasswordFormElement');
-            document.getElementById('forgotPasswordForm').style.display = 'block';
-            document.getElementById('loginForm').style.display = 'none';
-            document.getElementById('registerForm').style.display = 'none';
-            document.getElementById('overlay').style.display = 'block';
-        }
-
-        function hideForgotPassword() {
-            document.getElementById('forgotPasswordForm').style.display = 'none';
-            document.getElementById('overlay').style.display = 'none';
-        }
-
         function clearMessages() {
             const errorMessages = document.querySelectorAll('.error-message');
             const successMessages = document.querySelectorAll('.success-message');
@@ -153,17 +155,8 @@
         function clearForm(formId) {
             document.getElementById(formId).reset();
         }
-
-        function showTrangChu() {
-            document.getElementById('trangchuForm').style.display = 'block';
-            document.getElementById('forgotPasswordForm').style.display = 'none';
-            document.getElementById('loginForm').style.display = 'none';
-            document.getElementById('registerForm').style.display = 'none';
-            document.getElementById('overlay').style.display = 'block';
-        }
-
-        function showKhachHangForm() {
-            window.location.href = '/FrontEnd/html/KhachHangForm.html';
+        function showNhanVienForm() {
+            window.location.href = '/FrontEnd/html/NhanVienForm.html';
         }
         function showNhaXeForm() {
             window.location.href = '/FrontEnd/html/NhaXeForm.html';
@@ -174,8 +167,8 @@
         function showChuyenXeForm() {
             window.location.href = '/FrontEnd/html/ChuyenXeForm.html';
         }
-        function showTuyenDuongForm() {
-            window.location.href = '/FrontEnd/html/TuyenDuongForm.html';
+        function showKhachHangForm() {
+            window.location.href = '/FrontEnd/html/KhachHangForm.html';
         }
     </script>
 
@@ -184,9 +177,7 @@
     <script src="/FrontEnd/js/scriptQuenMk.js"></script>
     <script src="/FrontEnd/js/scriptAnUserVaDX.js"></script>
     <script src="/FrontEnd/js/scriptHienDNvaDK.js"></script>
-    <script src="/FrontEnd/js/scriptNhanVien.js"></script>
-
-
+    <script src="/FrontEnd/js/scriptTuyenDuong.js"></script>
 
 </body>
 

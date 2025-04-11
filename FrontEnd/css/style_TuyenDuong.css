@@ -1,7 +1,7 @@
 body {
     font-family: Arial, sans-serif;
     background-color: #e3f2fd;
-    margin: 0;
+    margin:0;   
     padding: 0;
     display: flex;
     flex-direction: column;
@@ -21,7 +21,7 @@ body {
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-    width: 40%; /* Reduced width */
+    width:40%;
     text-align: center;
 }
 .containerDS {
@@ -54,7 +54,6 @@ body {
     width: 100%;
     border-collapse: collapse;
 }
-
 h1 {
     font-size: 25px;
     color: #1565c0;
@@ -68,15 +67,14 @@ h1 {
 label {
     font-weight: bold;
     color: #1565c0;
-    font-size: 15px;
 }
 
 input {
-    width: 100%; /* Adjusted input width */
     padding: 10px;
     border: 1px solid #90caf9;
     border-radius: 5px;
     outline: none;
+    width: 100%;
     flex-grow: 1;
     font-size: 15px;
 }
@@ -84,7 +82,7 @@ input {
 .form_actions {
     display: flex;  /* Sắp xếp các input trên cùng một hàng */
     gap: 10px;
-    margin-top: 10px;
+    margin-top: 50px;
     text-align: center;
 }
 
@@ -95,10 +93,10 @@ input {
     border: none;
     border-radius: 50px;
     cursor: pointer;
-    margin-top: 30px;
+    margin: 5px;
     transition: 0.3s;
-    font-size: 15px;
 }
+
 .form_actions .Them_submit:hover {
     background-color: #00ff0d;
 } 
@@ -125,23 +123,15 @@ th {
     background-color: #1565c0;
     color: white;
 }
-
-thead th:nth-child(1), .body td:nth-child(1) { width: 6%; }
-thead th:nth-child(2), .body td:nth-child(2) { width: 15%; }
-thead th:nth-child(3), .body td:nth-child(3) { width: 15%; }
-thead th:nth-child(4), .body td:nth-child(4) { width: 25%; }
-thead th:nth-child(5), .body td:nth-child(5) { width: 20%; }
-thead th:nth-child(6), .body td:nth-child(6) { width: 20%; }
-
-.HT_KhachHang{
-    width: 10%;
+.HT_TuyenDuong{
+    width: 11%;
     padding: 5px;
     background-color: #1565c0;
     margin-top: 90px;
     text-align: center;
     border-radius: 100px;
 }
-.HT_KhachHang h1{
+.HT_TuyenDuong h1{
     font-size: 20px;
     color: rgb(255, 255, 255);
 }
@@ -149,12 +139,14 @@ thead th:nth-child(6), .body td:nth-child(6) { width: 20%; }
 .success-message {
     color: rgb(7, 187, 13);
     text-align: center;
+    margin-top: 5px;
     z-index: 2;
 }
 .error-message {
     font-size: 14px;
     color: red;
     text-align: center;
+    margin-top: 5px;
     z-index: 2;
 }
 .edit-btn, .delete-btn {
@@ -182,4 +174,34 @@ thead th:nth-child(6), .body td:nth-child(6) { width: 20%; }
 
 .delete-btn:hover {
     background-color: rgb(167, 0, 0);
+}
+
+thead th:nth-child(1), .body td:nth-child(1) { width: 5%; }
+thead th:nth-child(2), .body td:nth-child(2) { width: 15%; }
+thead th:nth-child(3), .body td:nth-child(3) { width: 15%; }
+thead th:nth-child(4), .body td:nth-child(4) { width: 20%; }
+thead th:nth-child(5), .body td:nth-child(5) { width: 25%; }
+thead th:nth-child(6), .body td:nth-child(6) { width: 20%; }
+
+select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    background: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+/* Hiệu ứng khi chọn */
+select:hover {
+    border-color: #007BFF;
+}
+
+/* Khi nhấn vào */
+select:focus {
+    border-color: #007BFF;
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
 }

@@ -96,7 +96,7 @@ document.addEventListener("DOMContentLoaded", function () {
             method = "PUT";
         } else {
             // Kiểm tra ID và số điện thoại tồn tại
-try {
+    try {
     // Gửi yêu cầu GET tới để kiểm tra dữ liệu
     const response = await fetch('http://localhost:9999/api/khachhang/customer');
     if (!response.ok) {
@@ -181,6 +181,25 @@ try {
         document.getElementById("KHcustomerEmail").value = email;
         document.getElementById("KHcustomerAddress").value = address;
     };
+    const customerFields = [
+        { id: "KHcustomerID", errorId: "errorID" },
+        { id: "KHcustomerName", errorId: "errorName" },
+        { id: "KHcustomerPhone", errorId: "errorPhone" },
+        { id: "KHcustomerEmail", errorId: "errorEmail" },
+        { id: "KHcustomerAddress", errorId: "errorAddress" }
+    ];
     
+    customerFields.forEach(field => {
+        const input = document.getElementById(field.id);
+        if (input) {
+            input.addEventListener("input", () => {
+                document.getElementById(field.errorId).textContent = "";
+                document.getElementById("customerErrorMessage").textContent = "";
+                document.getElementById("customerSuccessMessage").textContent = "";
+            });
+        }
+    });
+    
+   
     loadCustomers(); // Gọi hàm loadCustomers để tải danh sách khách hàng
 });

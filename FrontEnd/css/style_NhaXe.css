@@ -103,14 +103,15 @@ th {
     color: white;
 }
 .HT_NhaXe{
-    width: 18%;
+    width: 7%;
+    padding: 5px;
     background-color: #1565c0;
     margin-top: 90px;
     text-align: center;
     border-radius: 100px;
 }
 .HT_NhaXe h1{
-    font-size: 40px;
+    font-size: 20px;
     color: rgb(255, 255, 255);
 }
 

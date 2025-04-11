@@ -167,6 +167,23 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById("NVemployeeRole").value = role;
         document.getElementById("NVemployeePhone").value = phone;
     };
+    const employeeFields = [
+        { id: "NVemployeeID", errorId: "errorID" },
+        { id: "NVemployeeName", errorId: "errorName" },
+        { id: "NVemployeeRole", errorId: "errorRole" },
+        { id: "NVemployeePhone", errorId: "errorPhone" }
+    ];
+    
+    employeeFields.forEach(field => {
+        const input = document.getElementById(field.id);
+        if (input) {
+            input.addEventListener("input", () => {
+                document.getElementById(field.errorId).textContent = "";
+                document.getElementById("employeeErrorMessage").textContent = "";
+                document.getElementById("employeeSuccessMessage").textContent = "";
+            });
+        }
+    });
     
     loadEmployees();
 });

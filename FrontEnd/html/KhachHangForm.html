@@ -23,7 +23,8 @@
             <a href="#" class="dropdown-toggle">Hệ thống</a>
             <ul class="dropdown-menu">
                 <li><a href="#" onclick="showKhachHangForm()"><i class="fa fa-user"></i> Khách hàng</a></li>
-                <li><a href="#"><i class='fas fa-route'></i> Tuyến đường</a></li>
+                <li><a href="#" onclick="showTuyenDuongForm()"><i class='fas fa-route'></i> Tuyến đường</a></li>
+                <li><a href="#" onclick="showChuyenXeForm()"><i class="fa fa-bus"></i> Chuyến xe</a></li>
                 <li><a href="#" onclick="showXeForm()"><i class="fa fa-car"></i> Xe</a></li>
                 <li><a href="#" onclick="showNhanVienForm()"><i class="fa fa-users"></i> Nhân viên</a></li>
                 <li><a href="#" onclick="showNhaXeForm()"><i class="fa fa-house"></i> Nhà xe</a></li>
@@ -76,8 +77,8 @@
                 <div class="success-message" id="customerSuccessMessage"></div>
                 <div class="error-message" id="customerErrorMessage"></div>
                 <div class="form_actions">
-                    <input type="submit" name="them" value="Thêm" class="Them_submit">
-                    <input type="submit" name="sua" value="Chấp nhận sửa" class="Sua_submit">
+                    <input type="submit" name="them" value="Thêm" class="submit">
+                    <input type="submit" name="sua" value="Chấp nhận sửa" class="submit">
                 </div>
             </form>
             <div class="message" id="message"></div>
@@ -85,7 +86,7 @@
 
         <div class="containerDS" id="DSKH_form">
             <h1>Danh sách khách hàng</h1>
-            <table border="1">
+            <table class="header" border="1">
                 <thead>
                     <tr>
                         <th>Mã </th>
@@ -96,8 +97,13 @@
                         <th></th>
                     </tr>
                 </thead>
-                <tbody id="customerTableBody"></tbody>
             </table>
+
+            <div class="table-scroll">
+                <table class="body" border="1">
+                    <tbody id="customerTableBody"></tbody>
+                </table>
+            </div>
         </div>
     </div>
     <div id="overlay" class="hidden"></div>
@@ -153,6 +159,12 @@
         }
         function showXeForm() {
             window.location.href = '/FrontEnd/html/XeForm.html';
+        }
+        function showChuyenXeForm() {
+            window.location.href = '/FrontEnd/html/ChuyenXeForm.html';
+        }
+        function showTuyenDuongForm() {
+            window.location.href = '/FrontEnd/html/TuyenDuongForm.html';
         }
     </script>
 

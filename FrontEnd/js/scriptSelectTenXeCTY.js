@@ -4,6 +4,7 @@ async function loadBusCompanies() {
         const companies = await response.json();
         
         const select = document.getElementById("company");
+        
         companies.forEach(company => {
             let option = document.createElement("option");
             option.textContent = company.Name;
@@ -13,6 +14,8 @@ async function loadBusCompanies() {
         console.error("Lỗi tải danh sách công ty xe:", error);
     }
 }
+
+
 
 // Gọi hàm khi trang tải xong
 window.onload = loadBusCompanies;

@@ -7,7 +7,7 @@
     <title>QL_XeVui</title>
     <link rel="stylesheet" href="/FrontEnd/css/style_login.css">
     <link rel="stylesheet" href="/FrontEnd/css/style.css">
-    <link rel="stylesheet" href="/FrontEnd/css/style_NhanVien.css">
+    <link rel="stylesheet" href="/FrontEnd/css/style_ChuyenXe.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
@@ -40,35 +40,64 @@
 </header>
 
 <body>
-    <div class="HT_NhanVien">
-        <h1>Nhân viên</h1>
+    <div class="HT_ChuyenXe">
+        <h1>Chuyến xe</h1>
     </div>
     <div class="container-wrapper">
-        <div class="containerQL" id="QLNV_form">
-            <h1>Quản lý nhân viên</h1>
-            <form id="employeeFormElement" class="form_nhanvien" action="/api/nhanvien/employee" method="POST">
+        <div class="containerQL" id="QLChuyenXe_form">
+            <h1>Quản lý chuyến xe</h1>
+            <form id="tripFormElement" class="form_trip" action="/api/trip" method="POST">
                 <div class="form_group">
-                    <label for="employeeID">Mã nhân viên</label>
-                    <input type="text" id="NVemployeeID" name="employeeID" placeholder="Mã nhân viên">
-                    <div class="error-message" id="errorID"></div>
+                    <label for="tripID">Mã chuyến đi</label>
+                    <input type="text" id="tripID" name="tripID" placeholder="Mã chuyến đi">
+                    <div class="error-message" id="errorTripID"></div>
                 </div>
                 <div class="form_group">
-                    <label for="employeeName">Họ và tên</label>
-                    <input type="text" id="NVemployeeName" name="employeeName" placeholder="Họ và tên">
-                    <div class="error-message" id="errorName"></div>
+                    <label for="Depature">Điểm khởi hành</label>
+                    <select id="Depature" name="Depature">
+                        <option value="">-- Chọn điểm khởi hành --</option>
+                    </select>
+                    <div class="error-message" id="errorDepature"></div>
                 </div>
                 <div class="form_group">
-                    <label for="employeeRole">Chức vụ</label>
-                    <input type="text" id="NVemployeeRole" name="employeeRole" placeholder="Chức vụ">
-                    <div class="error-message" id="errorRole"></div>
+                    <label for="Destination">Điểm đến</label>
+                    <select id="Destination" name="Destination">
+                        <option value="">-- Chọn điểm đến --</option>
+                    </select>
+                    <div class="error-message" id="errorDestination"></div>
                 </div>
                 <div class="form_group">
-                    <label for="employeePhone">Số điện thoại</label>
-                    <input type="text" id="NVemployeePhone" name="employeePhone" placeholder="Số điện thoại">
-                    <div class="error-message" id="errorPhone"></div>
+                    <label for="departureTime">Thời gian khởi hành</label>
+                    <input type="datetime-local" id="departureTime" name="departureTime">
+                    <div class="error-message" id="errorDepartureTime"></div>
                 </div>
-                <div class="success-message" id="employeeSuccessMessage"></div>
-                <div class="error-message" id="employeeErrorMessage"></div>
+                <div class="form_group">
+                    <label for="arrivalTime">Thời gian đến</label>
+                    <input type="datetime-local" id="arrivalTime" name="arrivalTime">
+                    <div class="error-message" id="errorArrivalTime"></div>
+                </div>
+                <div class="form_group">
+                    <label for="employee">Nhân viên phụ trách</label>
+                    <select id="employee" name="employee">
+                        <option value="">-- Chọn nhân viên --</option>
+                    </select>
+                    <div class="error-message" id="erroremployee"></div>
+                </div>
+                <div class="form_group">
+                    <label for="LicensePlate">Xe phụ trách</label>
+                    <select id="LicensePlate" name="LicensePlate">
+                        <option value="">-- Chọn biển số xe --</option>
+                    </select>
+                    <div class="error-message" id="errorLicensePlate"></div>
+                </div>
+                <div class="form_group">
+                    <label for="BasePrice">Giá tuyến</label>
+                    <input type="text" id="BasePrice" name="BasePrice" readonly>
+                    <div class="error-message" id="errorBasePrice"></div>
+                </div>
+
+                <div class="success-message" id="tripSuccessMessage"></div>
+                <div class="error-message" id="tripErrorMessage"></div>
                 <div class="form_actions">
                     <input type="submit" name="them" value="Thêm" class="Them_submit">
                     <input type="submit" name="sua" value="Chấp nhận sửa" class="Sua_submit">
@@ -77,20 +106,28 @@
             <div class="message" id="message"></div>
         </div>
 
-        <div class="containerDS" id="DSNV_form">
-            <h1>Danh sách nhân viên</h1>
-            <table border="1">
+        <div class="containerDS" id="DSTrip_form">
+            <h1>Danh sách chuyến xe</h1>
+            <table class="header" border="1">
                 <thead>
                     <tr>
                         <th>Mã</th>
-                        <th>Họ và tên</th>
-                        <th>Chức vụ</th>
-                        <th>SĐT</th>
+                        <th>Điểm đi</th>
+                        <th>Điểm đến</th>
+                        <th>Thời gian đi</th>
+                        <th>Thời gian đến</th>
+                        <th>Nhân viên phụ trách</th>
+                        <th>Xe phụ trách</th>
+                        <th>Giá tuyến</th>
                         <th></th>
                     </tr>
                 </thead>
-                <tbody id="employeeTableBody"></tbody>
             </table>
+            <div class="table-scroll">
+                <table class="body" border="1">
+                    <tbody id="tripTableBody"></tbody>
+                </table>
+            </div>
         </div>
     </div>
     <div id="overlay" class="hidden"></div>
@@ -162,17 +199,17 @@
             document.getElementById('overlay').style.display = 'block';
         }
 
+        function showNhanVienForm() {
+            window.location.href = '/FrontEnd/html/NhanVienForm.html';
+        }
         function showKhachHangForm() {
             window.location.href = '/FrontEnd/html/KhachHangForm.html';
-        }
-        function showNhaXeForm() {
-            window.location.href = '/FrontEnd/html/NhaXeForm.html';
         }
         function showXeForm() {
             window.location.href = '/FrontEnd/html/XeForm.html';
         }
-        function showChuyenXeForm() {
-            window.location.href = '/FrontEnd/html/ChuyenXeForm.html';
+        function showNhaXeForm() {
+            window.location.href = '/FrontEnd/html/NhaXeForm.html';
         }
         function showTuyenDuongForm() {
             window.location.href = '/FrontEnd/html/TuyenDuongForm.html';
@@ -184,8 +221,8 @@
     <script src="/FrontEnd/js/scriptQuenMk.js"></script>
     <script src="/FrontEnd/js/scriptAnUserVaDX.js"></script>
     <script src="/FrontEnd/js/scriptHienDNvaDK.js"></script>
-    <script src="/FrontEnd/js/scriptNhanVien.js"></script>
-
+    <script src="/FrontEnd/js/scriptSelectChuyenXe.js"></script>
+    <script src="/FrontEnd/js/scriptChuyenXe.js"></script>
 
 
 </body>

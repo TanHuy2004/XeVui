@@ -1,40 +1,47 @@
 document.addEventListener("DOMContentLoaded", function () {
     const busForm = document.getElementById("XeFormElement");
     const tableBody = document.getElementById("busTableBody");
-    const companySelect = document.getElementById("company");
 
     
     async function loadBuses() {
+        const tableBody = document.querySelector("#busTableBody");
         tableBody.innerHTML = "";
         try {
-            const response = await fetch("http://localhost:9999/api/xe/bus");
-            if (!response.ok) throw new Error("Không thể tải dữ liệu");
-            const buses = await response.json();
+            // Gọi đồng thời cả hai API
+            const [busRes, companyRes] = await Promise.all([
+                fetch("http://localhost:9999/api/xe/bus"),
+                fetch("http://localhost:9999/api/selectTenXeCTY/selectTenXeCTY")
+            ]);
+
+            if (!busRes.ok || !companyRes.ok) throw new Error("Không thể tải dữ liệu");
+
+            const buses = await busRes.json();
+            const companies = await companyRes.json();
+
+            buses.sort((a, b) => a.BusID - b.BusID);
 
             if (buses.length === 0) {
                 tableBody.innerHTML = `<tr><td colspan="5">Chưa có dữ liệu xe nào!!!</td></tr>`;
-            } else {
-                for (const bus of buses) {
-                    // Fetch the company name for each bus
-                    const companyResponse = await fetch("http://localhost:9999/api/selectTenXeCTY/selectTenXeCTY");
-                    if (!companyResponse.ok) throw new Error("Không thể tải danh sách công ty");
-                    const companies = await companyResponse.json();
-                    const company = companies.find(c => c.BusCompanyID === bus.BusCompanyID);
-                    const companyName = company ? company.Name : "Không xác định";
+                return;
+            }
 
-                    const row = document.createElement("tr");
-                    row.innerHTML = `
-                        <td>${bus.BusID}</td>
-                        <td>${bus.LicensePlate}</td>
-                        <td>${bus.SeatCapacity}</td>
-                        <td>${companyName}</td> 
-                        <td>
-                            <button class="edit-btn" onclick="editBus('${bus.BusID}', '${bus.LicensePlate}', '${bus.SeatCapacity}', '${bus.BusCompanyID}')">Sửa</button>
-                            <button class="delete-btn" onclick="deleteBus('${bus.BusID}')">Xóa</button>
-                        </td>
-                    `;
-                    tableBody.appendChild(row);
-                }
+            // Duyệt danh sách xe và hiển thị
+            for (const bus of buses) {
+                const company = companies.find(c => c.BusCompanyID === bus.BusCompanyID);
+                const companyName = company ? company.Name : "Không xác định";
+
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                    <td>${bus.BusID}</td>
+                    <td>${bus.LicensePlate}</td>
+                    <td>${bus.SeatCapacity}</td>
+                    <td>${companyName}</td>
+                    <td>
+                        <button class="edit-btn" onclick="editBus('${bus.BusID}', '${bus.LicensePlate}', '${bus.SeatCapacity}', '${bus.BusCompanyID}')">Sửa</button>
+                        <button class="delete-btn" onclick="deleteBus('${bus.BusID}')">Xóa</button>
+                    </td>
+                `;
+                tableBody.appendChild(row);
             }
         } catch (error) {
             console.error("❌ Lỗi tải dữ liệu xe:", error);

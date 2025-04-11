@@ -18,6 +18,10 @@ const quenMKRoutes = require("./BackEnd/Controller/QuenMKController");
 const nhaxeRoutes = require("./BackEnd/Controller/NhaXeController");
 const selectTenXeCTYRoutes = require("./BackEnd/Controller/SelectTenXeCTYController");
 const xeRoutes = require("./BackEnd/Controller/XeController");
+const tuyenDuongRoutes = require("./BackEnd/Controller/TuyenDuongController");
+const chuyenXeRoutes = require("./BackEnd/Controller/ChuyenXeController");
+const selectChuyenXeRoutes = require("./BackEnd/Controller/SelectChuyenXeController");
+
 
 // Register routes with unique prefixes to avoid conflicts
 app.use("/api/auth", authRoutes);
@@ -27,6 +31,9 @@ app.use("/api/khachhang", khachHangRoutes);
 app.use("/api/nhaxe",nhaxeRoutes );
 app.use("/api/selectTenXeCTY", selectTenXeCTYRoutes); 
 app.use("/api/xe", xeRoutes); 
+app.use("/api/tuyenduong", tuyenDuongRoutes);
+app.use("/api/chuyenxe", chuyenXeRoutes);
+app.use("/api/selectChuyenXe", selectChuyenXeRoutes);
 
 // Serve static files
 app.use('/FrontEnd', express.static(path.join(__dirname, 'FrontEnd')));

@@ -14,7 +14,6 @@ router.post('/bus', async (req, res) => {
         if (!busID || !licensePlate || !seatCapacity || !companyName) {
             return res.status(400).json({ message: 'Vui lòng cung cấp đầy đủ thông tin!' });
         }
-
         const pool = await poolPromise;
 
         if (!pool) {

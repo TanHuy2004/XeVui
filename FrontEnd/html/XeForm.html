@@ -23,7 +23,8 @@
             <a href="#" class="dropdown-toggle">Hệ thống</a>
             <ul class="dropdown-menu">
                 <li><a href="#" onclick="showKhachHangForm()"><i class="fa fa-user"></i> Khách hàng</a></li>
-                <li><a href="#"><i class='fas fa-route'></i> Tuyến đường</a></li>
+                <li><a href="#" onclick="showTuyenDuongForm()"><i class='fas fa-route'></i> Tuyến đường</a></li>
+                <li><a href="#" onclick="showChuyenXeForm()"><i class="fa fa-bus"></i> Chuyến xe</a></li>
                 <li><a href="#" onclick="showXeForm()"><i class="fa fa-car"></i> Xe</a></li>
                 <li><a href="#" onclick="showNhanVienForm()"><i class="fa fa-users"></i> Nhân viên</a></li>
                 <li><a href="#" onclick="showNhaXeForm()"><i class="fa fa-house"></i> Nhà xe</a></li>
@@ -44,8 +45,8 @@
     </div>
     <div class="container-wrapper">
         <div class="containerQL" id="QLXe_form">
-            <h1>Xe</h1>
-            <form id="XeFormElement" class="form_xe" action="" method="POST">
+            <h1>Quản lý xe</h1>
+            <form id="XeFormElement" class="form_xe" action="/api/xe/bus" method="POST">
                 <div class="form_group">
                     <label for="busID">Mã xe</label>
                     <input type="text" id="busID" name="busID" placeholder="Mã xe">
@@ -78,8 +79,8 @@
         </div>
 
         <div class="containerDS" id="DSXe_form">
-            <h1>Danh sách Xe</h1>
-            <table border="1">
+            <h1>Danh sách xe</h1>
+            <table class="header" border="1">
                 <thead>
                     <tr>
                         <th>Mã</th>
@@ -89,8 +90,12 @@
                         <th></th>
                     </tr>
                 </thead>
-                <tbody id="busTableBody"></tbody>
             </table>
+            <div class="table-scroll">
+                <table class="body" border="1">
+                    <tbody id="busTableBody"></tbody>
+                </table>
+            </div>
         </div>
     </div>
     <div id="overlay" class="hidden"></div>
@@ -145,7 +150,13 @@
             window.location.href = '/FrontEnd/html/NhaXeForm.html';
         }
         function showKhachHangForm() {
-            window.location.href = '/FrontEnd/shtml/KhachHangForm.html';
+            window.location.href = '/FrontEnd/html/KhachHangForm.html';
+        }
+        function showChuyenXeForm() {
+            window.location.href = '/FrontEnd/html/ChuyenXeForm.html';
+        }
+        function showTuyenDuongForm() {
+            window.location.href = '/FrontEnd/html/TuyenDuongForm.html';
         }
     </script>
 

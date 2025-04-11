@@ -25,7 +25,8 @@
                     <a href="#" class="dropdown-toggle">Hệ thống</a>
                     <ul class="dropdown-menu">
                         <li><a href="#" onclick="showKhachHangForm()"><i class="fa fa-user"></i> Khách hàng</a></li>
-                        <li><a href="#"><i class='fas fa-route'></i> Tuyến đường</a></li>
+                        <li><a href="#" onclick="showTuyenDuongForm()"><i class='fas fa-route'></i> Tuyến đường</a></li>
+                        <li><a href="#" onclick="showChuyenXeForm()"><i class="fa fa-bus"></i> Chuyến xe</a></li>
                         <li><a href="#" onclick="showXeForm()"><i class="fa fa-car"></i> Xe</a></li>
                         <li><a href="#" onclick="showNhanVienForm()"><i class="fa fa-users"></i> Nhân viên</a></li>
                         <li><a href="#" onclick="showNhaXeForm()"><i class="fa fa-house"></i> Nhà xe</a></li>
@@ -268,7 +269,12 @@
         function showXeForm() {
             window.location.href = '/FrontEnd/html/XeForm.html';
         }
-
+        function showChuyenXeForm() {
+            window.location.href = '/FrontEnd/html/ChuyenXeForm.html';
+        }
+        function showTuyenDuongForm() {
+            window.location.href = '/FrontEnd/html/TuyenDuongForm.html';
+        }
     </script>
     <script src="/FrontEnd/js/scriptLogin.js"></script>
     <script src="/FrontEnd/js/scriptHienMK.js"></script>
