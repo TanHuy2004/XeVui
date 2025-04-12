@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QL_XeVui</title>
+    <link rel="stylesheet" href="/FrontEnd/css/style_login.css">
+    <link rel="stylesheet" href="/FrontEnd/css/style_DSDatVe.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+
+
+
+<body>
+    <header>
+        <h2 class="logo">
+            <img src="/FrontEnd/HinhAnh/logo.png" alt="Logo">
+        </h2>
+        <nav class="navigation">
+            <a href="http://localhost:9999/XEVUI-Main/index.html">Trang chủ</a>
+            <a href="#" onclick="showDatVe()">Đặt vé</a>
+            <button class="btn_Login" onclick="showLogin()">Đăng nhập</button>
+            <button class="btn_Login" onclick="showRegister()">Đăng ký</button>
+            <div class="user-info" id="userinfo">
+                <button class="btn_Logout" onclick="logoutUser()">Đăng xuất</button>
+                <i class="fas fa-user-circle"></i> <span id="usernameDisplay"></span>
+            </div>
+        </nav>
+    </header>
+    <div class="search-form-container">
+        <h1 class="search-title">XE VUI LUÔN ĐỒNG HÀNH CÙNG BẠN</h1>
+        <form class="search-form">
+            <select id="Depature" name="Depature" class="form-input">
+                <option value="">-- Chọn điểm đi --</option>
+            </select>
+
+            <select id="Destination" name="Destination" class="form-input">
+                <option value="">-- Chọn điểm đến --</option>
+            </select>
+
+            <input type="date" name="travel-date" class="form-input" placeholder="Ngày đi">
+            <button type="submit" class="search-button">
+                <i class="fas fa-search"></i> Tìm kiếm
+            </button>
+        </form>
+    </div>
+    <div id="tripContainer"></div>
+
+    <div class="login" id="loginForm">
+        <form id="loginFormElement" class="form_login" action="/api/auth/login" method="POST">
+            <h1 class="form_hedding">Đăng nhập</h1>
+
+            <div class="form_group">
+                <i class="fa fa-user"></i>
+                <input type="text" name="username" id="loginUsername" class="form_input" placeholder="Tên đăng nhập">
+                <div class="error-message" id="loginUsernameError"></div>
+            </div>
+            <div class="form_group">
+                <i class="fa fa-key"></i>
+                <input type="password" name="password" id="loginPassword" class="form_input" placeholder="Mật khẩu">
+                <div class="eye" id="eyeIcon" onclick="togglePassword()">
+                    <i class="fa fa-eye"></i>
+                </div>
+
+
+                <div class="error-message" id="loginPasswordError"></div>
+            </div>
+            <div class="forgot__register_link">
+                <a href="#" onclick="showForgotPassword()">Quên mật khẩu?</a>
+                <a href="#" onclick="showRegister()">Đăng ký</a>
+            </div>
+
+            <input type="submit" value="Đăng nhập" class="form_submit">
+            <button type="button" class="btn_close" onclick="hideLogin()">Đóng</button>
+            <div class="success-message" id="loginSuccessMessage"></div>
+            <div class="error-message" id="loginErrorMessage"></div>
+        </form>
+
+    </div>
+    <div class="register" id="registerForm">
+        <form id="registerFormElement" class="form_register" action="/api/auth/register" method="POST">
+            <h1 class="form_hedding">Đăng ký</h1>
+
+            <div class="form_group">
+                <i class="fa fa-user"></i>
+                <input type="text" name="username" id="registerUsername" class="form_input" placeholder="Tên đăng nhập">
+                <div class="error-message" id="registerUsernameError"></div>
+            </div>
+
+            <div class="form_group">
+                <i class="fa fa-key"></i>
+                <input type="password" name="password" id="registerPassword" class="form_input" placeholder="Mật khẩu">
+                <div class="error-message" id="registerPasswordError"></div>
+            </div>
+
+            <div class="form_group">
+                <i class="fa fa-envelope"></i>
+                <input type="email" name="email" id="registerEmail" class="form_input" placeholder="Email">
+                <div class="error-message" id="registerEmailError"></div>
+            </div>
+
+            <input type="submit" value="Đăng ký" class="form_submit">
+            <button type="button" class="btn_close" onclick="hideRegister()">Đóng</button>
+            <div class="error-message" id="registerErrorMessage"></div>
+            <div class="success-message" id="registerSuccessMessage"></div>
+        </form>
+    </div>
+
+    <div class="forgot-password" id="forgotPasswordForm">
+        <form id="forgotPasswordFormElement" class="form_forgot">
+            <h1 class="form_hedding">Quên mật khẩu</h1>
+
+            <div class="form_group">
+                <i class="fa fa-envelope"></i>
+                <input type="email" name="email" id="forgotPasswordEmail" class="form_input"
+                    placeholder="Nhập email của bạn" required>
+                <div class="error-message" id="forgotPasswordEmailError"></div>
+            </div>
+            <div class="password-display" id="passwordDisplay"></div>
+            <input type="submit" value="Gửi yêu cầu" class="form_submit">
+            <button type="button" class="btn_close" onclick="hideForgotPassword()">Đóng</button>
+        </form>
+    </div>
+    <footer>
+        <footer class="footer">
+            <div class="footer-container">
+                <!-- Logo & Giới thiệu -->
+                <div class="footer-section">
+                    <h2 class="logo">Xe Vui</h2>
+                    <p>Đặt vé xe dễ dàng và an toàn.</p>
+                </div>
+
+                <!-- Điều hướng nhanh -->
+                <div class="footer-section">
+                    <h3>Thông tin</h3>
+                    <ul>
+                        <li><a href="#">Về chúng tôi</a></li>
+                        <li><a href="#">Hướng dẫn đặt vé</a></li>
+                        <li><a href="#">Chính sách bảo mật</a></li>
+                        <li><a href="#">Điều khoản sử dụng</a></li>
+                    </ul>
+                </div>
+
+                <!-- Liên hệ -->
+                <div class="footer-section">
+                    <h3>Liên hệ</h3>
+                    <p>📍 123A đường 9ABC, Quận 9, TP.HCM </p>
+                    <p>📞 0123 456 789</p>
+                    <p>📧 support@xevui.com</p>
+                </div>
+
+                <!-- Mạng xã hội -->
+                <div class="footer-section">
+                    <h3>Kết nối</h3>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook"> facebook</i></a>
+                        <a href="#"><i class="fab fa-instagram"> instagram</i></a>
+                        <a href="#"><i class="fab fa-twitter"> twitter</i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>© 2025 XeVui. Thank you!</p>
+            </div>
+        </footer>
+
+    </footer>
+
+    <div id="overlay" class="hidden"></div>
+
+    <script>
+        document.getElementById('overlay').addEventListener('click', function () {
+            hideLogin();
+            hideRegister();
+            hideForgotPassword();
+        });
+
+        function showLogin() {
+            clearMessages();
+            clearForm('loginFormElement');
+            document.getElementById('loginForm').style.display = 'block';
+            document.getElementById('registerForm').style.display = 'none';
+            document.getElementById('forgotPasswordForm').style.display = 'none';
+            document.getElementById('overlay').style.display = 'block';
+        }
+        function hideLogin() {
+            document.getElementById('loginForm').style.display = 'none';
+            document.getElementById('overlay').style.display = 'none';
+        }
+
+        function showRegister() {
+            clearMessages();
+            clearForm('registerFormElement');
+            document.getElementById('registerForm').style.display = 'block';
+            document.getElementById('loginForm').style.display = 'none';
+            document.getElementById('forgotPasswordForm').style.display = 'none';
+            document.getElementById('overlay').style.display = 'block';
+        }
+        function hideRegister() {
+            document.getElementById('registerForm').style.display = 'none';
+            document.getElementById('overlay').style.display = 'none';
+        }
+
+        function clearMessages() {
+            const errorMessages = document.querySelectorAll('.error-message');
+            const successMessages = document.querySelectorAll('.success-message');
+            errorMessages.forEach(message => message.textContent = '');
+            successMessages.forEach(message => message.textContent = '');
+        }
+
+        function bookTicket(tripId) {
+            window.location.href = `/FrontEnd/html/DatVeForm.html?tripId=${tripId}`;
+        }
+    </script>
+
+    <script src="/FrontEnd/js/scriptLogin.js"></script>
+    <script src="/FrontEnd/js/scriptHienMK.js"></script>
+    <script src="/FrontEnd/js/scriptQuenMk.js"></script>
+    <script src="/FrontEnd/js/scriptAnUserVaDX.js"></script>
+    <script src="/FrontEnd/js/scriptHienDNvaDK.js"></script>
+    <script src="/FrontEnd/js/scriptSelectChuyenXe.js"></script>
+    <script src="/FrontEnd/js/scriptDSChuyenXe.js"></script>
+</body>
+
+</html>

@@ -42,6 +42,7 @@ router.post('/register', async (req, res) => {
 });
 
 // API Đăng nhập người dùng
+// API Đăng nhập người dùng
 router.post('/login', async (req, res) => {
     try {
         const { username, password } = req.body;
@@ -64,12 +65,17 @@ router.post('/login', async (req, res) => {
 
         const user = userCheckResult.recordset[0];
 
-        // **So sánh mật khẩu thô trực tiếp**
+        // So sánh mật khẩu
         if (password !== user.MatKhau) {
             return res.status(400).json({ message: 'Tên đăng nhập hoặc mật khẩu không đúng' });
         }
 
-        res.status(200).json({ message: 'Đăng nhập thành công!' });
+        // Trả về thông tin người dùng và vai trò
+        res.status(200).json({
+            message: 'Đăng nhập thành công!',
+            username: user.TaiKhoan,
+            role: user.PhanQuyen || 'user', // Nếu vai trò NULL, mặc định là 'user'
+        });
 
     } catch (error) {
         console.error("Lỗi server:", error);

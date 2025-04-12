@@ -44,22 +44,18 @@
         <div class="search-form-container">
             <h1 class="search-title">XE VUI LUÔN ĐỒNG HÀNH CÙNG BẠN</h1>
             <form class="search-form">
-                <select title="text" name="departure" class="form-input">
-                    <option value="" disabled selected hidden>Chọn điểm xuất phát</option>
-                    <option value="HaNoi">Hà Nội</option>
-                    <option value="DaNang">Đà Nẵng</option>
-                    <option value="HoChiMinh">Hồ Chí Minh</option>
+                <select id="Depature" name="Depature" class="form-input">
+                    <option value="">-- Chọn điểm đi --</option>
                 </select>
 
-                <select title="text" name="destination" class="form-input">
-                    <option value="" disabled selected hidden>Chọn điểm đến</option>
-                    <option value="HaNoi">Hà Nội</option>
-                    <option value="DaNang">Đà Nẵng</option>
-                    <option value="HoChiMinh">Hồ Chí Minh</option>
+                <select id="Destination" name="Destination" class="form-input">
+                    <option value="">-- Chọn điểm đến --</option>
                 </select>
 
                 <input type="date" name="travel-date" class="form-input" placeholder="Ngày đi">
-                <button type="submit" class="search-button">Tìm kiếm</button>
+                <button type="submit" class="search-button">
+                    <i class="fas fa-search"></i> Tìm kiếm
+                </button>
             </form>
         </div>
         <footer>
@@ -275,12 +271,28 @@
         function showTuyenDuongForm() {
             window.location.href = '/FrontEnd/html/TuyenDuongForm.html';
         }
+        function showDatVe() {
+            window.location.href = '/FrontEnd/html/DSDatVeForm.html';
+        }
+
+        document.querySelector('.search-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const depature = document.getElementById('Depature').value;
+            const destination = document.getElementById('Destination').value;
+            const travelDate = document.querySelector('input[name="travel-date"]').value;
+
+            const query = `?depature=${encodeURIComponent(depature)}&destination=${encodeURIComponent(destination)}&date=${encodeURIComponent(travelDate)}`;
+            window.location.href = `/FrontEnd/html/DSDatVeForm.html${query}`;
+        });
     </script>
     <script src="/FrontEnd/js/scriptLogin.js"></script>
     <script src="/FrontEnd/js/scriptHienMK.js"></script>
     <script src="/FrontEnd/js/scriptQuenMk.js"></script>
     <script src="/FrontEnd/js/scriptAnUserVaDX.js"></script>
     <script src="/FrontEnd/js/scriptHienDNvaDK.js"></script>
+    <script src="/FrontEnd/js/scriptSelectChuyenXe.js"></script>
+    <script src="/FrontEnd/js/KiemTra.js"></script>
 </body>
 
 </html>

@@ -40,20 +40,18 @@ document.addEventListener("DOMContentLoaded", function () {
                         username: result.username,
                         role: result.role || 'user', // Nếu role là NULL, mặc định là 'user'
                     }));
-
+                
                     document.getElementById("loginSuccessMessage").textContent = result.message;
-
+                
                     // Ẩn form đăng nhập & hiển thị trang chủ
                     hideLogin();
-
+                
                     // Gọi hàm hiển thị trang chủ
                     showUser(username);
-
+                
                     // Hiển thị user và ẩn đăng nhập/đăng ký
                     loginUser(username);
-
-                } else {
-                    document.getElementById("loginErrorMessage").textContent = result.message || "Vui lòng thử lại.";
+                
                 }
             } catch (error) {
                 document.getElementById("loginErrorMessage").textContent = "Có lỗi xảy ra trong quá trình đăng nhập. Vui lòng thử lại sau.";

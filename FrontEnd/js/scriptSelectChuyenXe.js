@@ -34,9 +34,6 @@ async function loadRoutes() {
                 const route = routes.find(route => 
                     route.Depature === selectedDepature && route.Destination === selectedDestination
                 );
-                basePriceInput.value = route ? route.BasePrice : "Không tuyến đó!!!";
-            } else {
-                basePriceInput.value = "";
             }
         }
 
